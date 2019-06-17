@@ -1,6 +1,9 @@
 package com.geekschool.entity;
 
+import com.geekschool.constants.Status;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,11 +11,13 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "username")
     private String username;
@@ -29,7 +34,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
     private List<Role> roles;
 
 }
