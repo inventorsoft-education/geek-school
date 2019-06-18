@@ -14,7 +14,7 @@ public class UserDtoFactory {
                 user.getLastname(),
                 user.getEmail(),
                 user.getStatus(),
-                user.getRoles());
+                user.getRole());
     }
 
     public static AuthenticationLoginDto convertToAuthenticationLoginDto(User user) {

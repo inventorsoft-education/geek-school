@@ -1,11 +1,9 @@
 package com.geekschool.dto;
 
 import com.geekschool.constants.Status;
-import com.geekschool.entity.Role;
+import com.geekschool.constants.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -17,6 +15,6 @@ public class UserDto {
     private String lastname;
     private String email;
     private Status status;
-    private List<Role> roles;
+    private Role role;
 
 }

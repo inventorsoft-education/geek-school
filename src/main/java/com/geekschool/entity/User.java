@@ -1,12 +1,12 @@
 package com.geekschool.entity;
 
+import com.geekschool.constants.Role;
 import com.geekschool.constants.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -38,8 +38,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
-    private List<Role> roles;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 }
