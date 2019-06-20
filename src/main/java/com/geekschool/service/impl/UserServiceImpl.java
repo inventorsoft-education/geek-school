@@ -1,14 +1,14 @@
 package com.geekschool.service.impl;
 
+import com.geekschool.constants.Role;
 import com.geekschool.constants.Status;
 import com.geekschool.dto.UserDto;
-import com.geekschool.constants.Role;
 import com.geekschool.entity.User;
 import com.geekschool.mapper.UserDtoFactory;
 import com.geekschool.repository.UserRepository;
 import com.geekschool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setStatus(Status.ACTIVE);
+
         user.setRole(Role.STUDENT);
 
         userRepository.save(user);
@@ -52,9 +53,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto findByUsername(String name) {
+    public User findByUsername(String name) {
         User user = userRepository.findByUsername(name);
-        return UserDtoFactory.convertToUserDto(user);
+        return user;
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface UserService {
 
     List<UserDto> getAllUser();
 
-    UserDto findByUsername(String name);
+    User findByUsername(String name);
 
     UserDto findById(Long id);
 

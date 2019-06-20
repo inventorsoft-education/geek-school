@@ -5,7 +5,7 @@ import com.geekschool.entity.Message;
 
 public class MessageDtoFactory {
 
-    public static MessageDto convertToUserDto(Message message) {
+    public static MessageDto convertToMessageDto(Message message) {
         return new MessageDto(
                 message.getId(),
                 message.getSubject(),
