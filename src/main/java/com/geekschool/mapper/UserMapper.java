@@ -3,11 +3,15 @@ package com.geekschool.mapper;
 import com.geekschool.dto.AuthenticationLoginDto;
 import com.geekschool.dto.UserDto;
 import com.geekschool.entity.User;
-import com.geekschool.security.AuthenticationUser;
+import com.geekschool.config.security.AuthenticationUser;
+import lombok.AllArgsConstructor;
 
-public class UserDtoFactory {
+@AllArgsConstructor
+public class UserMapper {
 
-    public static UserDto convertToUserDto(User user) {
+    private User user;
+
+    public UserDto convertToUserDto() {
         return new UserDto(
                 user.getId(),
                 user.getUsername(),
@@ -18,14 +22,15 @@ public class UserDtoFactory {
                 user.getRole());
     }
 
-    public static AuthenticationLoginDto convertToAuthenticationLoginDto(User user) {
+    public AuthenticationLoginDto convertToAuthenticationLoginDto() {
         return new AuthenticationLoginDto(
                 user.getUsername(),
                 user.getPassword());
     }
 
-    public static AuthenticationUser convertToAuthenticationUser(User user) {
-        return new AuthenticationUser(user.getId(),
+    public AuthenticationUser convertToAuthenticationUser() {
+        return new AuthenticationUser(
+                user.getId(),
                 user.getUsername(),
                 user.getFirstname(),
                 user.getLastname(),

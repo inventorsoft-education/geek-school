@@ -1,7 +1,7 @@
-package com.geekschool.security;
+package com.geekschool.config.security;
 
 import com.geekschool.entity.User;
-import com.geekschool.mapper.UserDtoFactory;
+import com.geekschool.mapper.UserMapper;
 import com.geekschool.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +21,8 @@ public class AuthenticationUserDetailService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User with usernamae " + name + " not found");
         }
+        UserMapper userMapper = new UserMapper(user);
 
-        return UserDtoFactory.convertToAuthenticationUser(user);
+        return userMapper.convertToAuthenticationUser();
     }
 }

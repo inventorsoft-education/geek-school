@@ -1,4 +1,4 @@
-package com.geekschool.security;
+package com.geekschool.config.security;
 
 import com.geekschool.constants.Role;
 import com.geekschool.constants.Status;

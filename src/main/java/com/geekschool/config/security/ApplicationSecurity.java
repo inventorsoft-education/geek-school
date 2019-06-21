@@ -1,4 +1,4 @@
-package com.geekschool.security;
+package com.geekschool.config.security;
 
 import com.geekschool.constants.Role;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.ForwardAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -32,7 +34,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                     .httpBasic().disable()
                     .authorizeRequests()
                     .antMatchers(LOGIN_ENDPOINT).permitAll()
-                    .antMatchers(ADMIN_ENDPOINT).hasAuthority(Role.ADMIN.getAuthority())
+                    .antMatchers(ADMIN_ENDPOINT, "/users/").hasAuthority(Role.ADMIN.getAuthority())
                     .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
                     .anyRequest().authenticated()
                 .and()
@@ -42,7 +44,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                     .successHandler(new DefaultAuthenticationSuccessHandler())
                 .and()
                     .logout()
-                    .deleteCookies("remove")
+                    .deleteCookies("JSESSIONID")
                     .invalidateHttpSession(true)
                     .logoutUrl(LOGOUT_ENDPOINT)
                     .logoutSuccessUrl(LOGIN_ENDPOINT)

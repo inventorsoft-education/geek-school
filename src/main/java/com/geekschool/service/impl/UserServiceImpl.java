@@ -4,7 +4,7 @@ import com.geekschool.constants.Role;
 import com.geekschool.constants.Status;
 import com.geekschool.dto.UserDto;
 import com.geekschool.entity.User;
-import com.geekschool.mapper.UserDtoFactory;
+import com.geekschool.mapper.UserMapper;
 import com.geekschool.repository.UserRepository;
 import com.geekschool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,9 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-        return UserDtoFactory.convertToUserDto(user);
+        UserMapper userMapper = new UserMapper(user);
+
+        return userMapper.convertToUserDto();
     }
 
     @Override
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAllUser() {
         List<UserDto> userList = userRepository.findAll()
                 .stream()
-                .map(user -> UserDtoFactory.convertToUserDto(user))
+                .map(user -> new UserMapper(user).convertToUserDto())
                 .collect(Collectors.toList());
         return userList;
     }
@@ -62,7 +64,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto findById(Long id) {
         User user = userRepository.findById(id).get();
-        return UserDtoFactory.convertToUserDto(user);
+        UserMapper userMapper = new UserMapper(user);
+        return userMapper.convertToUserDto();
     }
 
     @Override
@@ -71,6 +74,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getOne(id);
         user.setRole(role);
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatusById(long id, Status status) {
+        userRepository.updateStatusById(id, status);
     }
 
     @Override

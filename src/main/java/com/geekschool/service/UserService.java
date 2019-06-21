@@ -1,5 +1,6 @@
 package com.geekschool.service;
 
+import com.geekschool.constants.Status;
 import com.geekschool.dto.UserDto;
 import com.geekschool.constants.Role;
 import com.geekschool.entity.User;
@@ -17,6 +18,8 @@ public interface UserService {
     UserDto findById(Long id);
 
     void updateRole(long id, Role role);
+
+    void updateStatusById(long id, Status status);
 
     void delete(Long id);
 }
