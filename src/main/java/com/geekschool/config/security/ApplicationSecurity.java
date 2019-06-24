@@ -12,8 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.ForwardAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +32,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                     .httpBasic().disable()
                     .authorizeRequests()
                     .antMatchers(LOGIN_ENDPOINT).permitAll()
-                    .antMatchers(ADMIN_ENDPOINT, "/users/").hasAuthority(Role.ADMIN.getAuthority())
+                    .antMatchers(ADMIN_ENDPOINT, "/api/users", "/users").hasAuthority(Role.ADMIN.getAuthority())
                     .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
                     .anyRequest().authenticated()
                 .and()

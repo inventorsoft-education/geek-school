@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Thymeleaf</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+</head>
+<body>
+<H1>Current</H1>
+<div>
+    <table id="my_page" class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">User name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/users/current",
+                        dataType: "json",
+                        cache: false,
+                        success: function(response) {
+                               $('#my_page').append(
+                                    "<tr><td>" + response.username +
+                                    "</td><td>" + response.email +
+                                    "</td><td>" + response.role +
+                                    "</td></tr>");
+                        }
+                    })
+                });
+    </script>
+</div>
+</body>
+</html>

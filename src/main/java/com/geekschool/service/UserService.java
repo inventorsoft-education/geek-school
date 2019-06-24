@@ -17,7 +17,7 @@ public interface UserService {
 
     UserDto findById(Long id);
 
-    void updateRole(long id, Role role);
+    void updateRoleById(long id, Role role);
 
     void updateStatusById(long id, Status status);
 
