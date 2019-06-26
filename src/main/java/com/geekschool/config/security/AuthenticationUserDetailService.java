@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationUserDetailService implements UserDetailsService {
 
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
@@ -21,8 +22,7 @@ public class AuthenticationUserDetailService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User with usernamae " + name + " not found");
         }
-        UserMapper userMapper = new UserMapper(user);
 
-        return userMapper.convertToAuthenticationUser();
+        return userMapper.convertToAuthenticationUser(user);
     }
 }

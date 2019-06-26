@@ -1,17 +1,16 @@
 package com.geekschool.mapper;
 
+import com.geekschool.config.security.AuthenticationUser;
 import com.geekschool.dto.AuthenticationLoginDto;
 import com.geekschool.dto.UserDto;
 import com.geekschool.entity.User;
-import com.geekschool.config.security.AuthenticationUser;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
+@Component
 public class UserMapper {
 
-    private User user;
-
-    public UserDto convertToUserDto() {
+    public UserDto convertToUserDto(User user) {
         return new UserDto(
                 user.getId(),
                 user.getUsername(),
@@ -22,13 +21,13 @@ public class UserMapper {
                 user.getRole());
     }
 
-    public AuthenticationLoginDto convertToAuthenticationLoginDto() {
+    public AuthenticationLoginDto convertToAuthenticationLoginDto(User user) {
         return new AuthenticationLoginDto(
                 user.getUsername(),
                 user.getPassword());
     }
 
-    public AuthenticationUser convertToAuthenticationUser() {
+    public AuthenticationUser convertToAuthenticationUser(User user) {
         return new AuthenticationUser(
                 user.getId(),
                 user.getUsername(),

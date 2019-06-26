@@ -45,9 +45,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                     .deleteCookies("JSESSIONID")
                     .invalidateHttpSession(true)
                     .logoutUrl(LOGOUT_ENDPOINT)
-                    .logoutSuccessUrl(LOGIN_ENDPOINT)
-                .and()
-                    .csrf().disable();
+                    .logoutSuccessUrl(LOGIN_ENDPOINT);
     }
 
     @Bean

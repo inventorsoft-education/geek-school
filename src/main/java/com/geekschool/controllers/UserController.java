@@ -14,12 +14,13 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/users/")
+@RequestMapping("api/users")
 public class UserController {
 
     private UserService userService;
+    private UserMapper userMapper;
 
-    @GetMapping("current")
+    @GetMapping("/current")
     @ResponseStatus(HttpStatus.OK)
     public UserDto getCurrentUser() {
 
@@ -27,9 +28,7 @@ public class UserController {
 
         User user = userService.findByUsername(username);
 
-        UserMapper userMapper = new UserMapper(user);
-
-        return userMapper.convertToUserDto();
+        return userMapper.convertToUserDto(user);
     }
 
     @GetMapping

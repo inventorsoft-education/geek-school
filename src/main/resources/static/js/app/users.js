@@ -2,7 +2,7 @@ $(document).ready(function() {
                 $("#load_table").click(function() {
                     $.ajax({
                         type: 'GET',
-                        url: 'api/users/',
+                        url: 'api/users',
                         dataType: 'json',
                         cache: false,
                         traditional: true,

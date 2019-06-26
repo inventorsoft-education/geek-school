@@ -3,13 +3,12 @@ package com.geekschool.mapper;
 import com.geekschool.dto.MessageDto;
 import com.geekschool.entity.Message;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@AllArgsConstructor
+@Component
 public class MessageMapper {
 
-    private Message message;
-
-    public MessageDto convertToMessageDto() {
+    public MessageDto convertToMessageDto(Message message) {
         return new MessageDto(
                 message.getId(),
                 message.getSubject(),
