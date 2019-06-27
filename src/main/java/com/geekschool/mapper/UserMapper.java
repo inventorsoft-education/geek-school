@@ -4,7 +4,6 @@ import com.geekschool.config.security.AuthenticationUser;
 import com.geekschool.dto.AuthenticationLoginDto;
 import com.geekschool.dto.UserDto;
 import com.geekschool.entity.User;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component

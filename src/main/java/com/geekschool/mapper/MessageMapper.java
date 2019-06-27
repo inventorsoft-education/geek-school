@@ -2,7 +2,6 @@ package com.geekschool.mapper;
 
 import com.geekschool.dto.MessageDto;
 import com.geekschool.entity.Message;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component

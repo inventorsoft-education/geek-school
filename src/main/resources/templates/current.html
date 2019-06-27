@@ -5,10 +5,11 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Thymeleaf</title>
+    <title>Current</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/handlebars-v4.1.2.js}"></script>
 
 </head>
 <body>
@@ -22,9 +23,15 @@
             <th scope="col">Role</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="current_user">
         </tbody>
     </table>
+    <script id="entry" type="text/x-handlebars-template">
+            <td>{{username}}</td>
+            <td>{{email}}</td>
+            <td>{{role}}</td>
+
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -34,11 +41,9 @@
                         dataType: "json",
                         cache: false,
                         success: function(response) {
-                               $('#my_page').append(
-                                    "<tr><td>" + response.username +
-                                    "</td><td>" + response.email +
-                                    "</td><td>" + response.role +
-                                    "</td></tr>");
+                            var source   = document.getElementById("entry").innerHTML;
+                            var template = Handlebars.compile(source);
+                               $('#my_page').append(template(response));
                         }
                     })
                 });

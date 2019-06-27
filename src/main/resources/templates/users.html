@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"lang="en">
+      xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Users</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+    <script type="text/javascript" src="js/handlebars-v4.1.2.js"></script>
 
 </head>
 <body>
@@ -24,21 +27,36 @@
             <th scope="col">change status</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="user_data">
+
         </tbody>
     </table>
 
+    <script id="entry-template" type="text/x-handlebars-template">
+        <tr>
+            <td>{{username}}</td>
+            <td>{{email}}</td>
+            <td>{{role}}</td>
+            <td>{{status}}</td>
+            <td> <button id='btn_change' data= '{{id}}' >Change</button></td>
+        </tr>
+    </script>
+
+    <script id="status-template" type="text/x-handlebars-template">
+        <option value="{{.}}"></option>
+    </script>
+
+
     <div class="popup" id="change_status" style="display:none">
         <div class="object" style="text-align: center">
-            <form action= "" method= "">
+            <form action="" method="" >
+
                 <p>Status :
                     <input type="text" name="state" id="state" list="status_list">
                     <datalist id="status_list">
-                        <option value="ACTIVE"></option>
-                        <option value="NOT_ACTIVE"></option>
-                        <option value="DELETED"></option>
+
                     </datalist>
-                    -            <input type= "submit" id="btn_change_status" value= "ok">
+                     <input type="submit" id="btn_change_status" value="ok">
                 </p>
             </form>
         </div>
