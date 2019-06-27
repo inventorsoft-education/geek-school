@@ -2,20 +2,17 @@ package com.geekschool.controllers;
 
 import com.geekschool.dto.GroupDto;
 import com.geekschool.dto.UserDto;
-import com.geekschool.entity.Group;
 import com.geekschool.entity.User;
 import com.geekschool.mapper.GroupMapper;
 import com.geekschool.mapper.UserMapper;
+import com.geekschool.repository.UserRepository;
 import com.geekschool.service.GroupService;
 import com.geekschool.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,17 +23,17 @@ public class GroupController {
 
     private GroupService groupService;
     private UserService userService;
+    private UserRepository userRepository;
     private UserMapper userMapper;
     private GroupMapper groupMapper;
 
     @GetMapping("admin/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Set<UserDto> getStudentsOfGroupById(@PathVariable long id) {
-        Optional<Group> group = groupService.getGroupById(id);
-        Set<UserDto> students = group.get().getStudents()
-                        .stream()
-                        .map(u -> userMapper.convertToUserDto(u))
-                        .collect(Collectors.toSet());
+        GroupDto group = groupService.getGroupById(id);
+        Set<UserDto> students = group.getStudents().stream()
+                .map(u -> userMapper.convertToUserDto(u))
+                .collect(Collectors.toSet());
         return students;
     }
 
@@ -54,25 +51,22 @@ public class GroupController {
     public void addUserToGroup(@RequestParam("group_id") long idGroup,
                                @RequestParam("username") String username) {
 
-        Optional<Group> group = groupService.getGroupById(idGroup);
-        group.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        GroupDto group = groupService.getGroupById(idGroup);
 
-        Optional<User> user = userService.findByUsername(username);
-        user.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User user = userRepository.findByUsername(username).get();
 
-        group.get().getStudents().add(user.get());
+        group.getStudents().add(user);
 
-        groupService.saveGroup(group.get());
+        groupService.saveGroup(groupMapper.convertToGroup(group));
     }
 
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUserFromGroup(@PathVariable long id,
                                     @RequestParam String username) {
-        Optional<User> user = userService.findByUsername(username);
-        user.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User user = userRepository.findByUsername(username).get();
 
-        groupService.deleteUserFromGroup(id, user.get());
+        groupService.deleteUserFromGroup(id, user);
     }
 
 }

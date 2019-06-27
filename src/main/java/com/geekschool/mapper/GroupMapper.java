@@ -15,4 +15,12 @@ public class GroupMapper {
                 group.getSubjects(),
                 group.getStudents());
     }
+
+    public Group convertToGroup(GroupDto groupDto) {
+        return new Group(groupDto.getId(),
+                groupDto.getName(),
+                groupDto.getDescription(),
+                groupDto.getSubjects(),
+                groupDto.getStudents());
+    }
 }
