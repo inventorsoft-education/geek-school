@@ -13,7 +13,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class DefaultAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-	private static final String HOME_PAGE = "/users";
+	private static final String HOME_PAGE = "/groups";
 
 	@Override
 	public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {

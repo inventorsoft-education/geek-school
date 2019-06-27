@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,18 +31,18 @@ public class UserController {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        User user = userService.findByUsername(username);
+        Optional<User> user = userService.findByUsername(username);
 
-        return userMapper.convertToUserDto(user);
+        return userMapper.convertToUserDto(user.get());
     }
 
-    @GetMapping
+    @GetMapping("admin")
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers() {
         return userService.getAllUser();
     }
 
-    @GetMapping("status")
+    @GetMapping("admin/status")
     public List<Status> getStatus() {
         return Arrays.stream(Status.values()).collect(Collectors.toList());
     }

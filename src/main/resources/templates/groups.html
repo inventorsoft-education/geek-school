@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Course</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+    <script type="text/javascript" src="js/handlebars-v4.1.2.js"></script>
+</head>
+
+<body>
+<H1>Add student</H1>
+<div class="object" style="text-align: left">
+    <form action="" method="">
+        <div class="icon"><i class="fa fa-plane" aria-hidden="true"></i></div>
+        <div class="form-select">
+
+            <script id="group-template" type="text/x-handlebars-template">
+                <option name="{{id}}" id="group_id">{{name}}</option>
+            </script>
+
+            <input id="name_user" type="text" name="last_name" placeholder="Last Name" onfocus="this.placeholder = ''"
+                   onblur="this.placeholder = 'Last Name'" required class="single-input">
+
+            <input type="text" name="groups" id="groups" list="input_group" placeholder="group">
+            <datalist id="input_group">
+
+            </datalist>
+
+            <input type="submit" id="add_student" value="add">
+            <input type="submit" id="delete_student" value="delete">
+        </div>
+
+</div>
+
+</form>
+</div>
+</div>
+<script type="text/javascript" src="js/app/groups.js"></script>
+</div>
+</body>
+</html>

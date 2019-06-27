@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,14 +46,14 @@ public class UserService {
     }
 
     @Transactional
-    public User findByUsername(String name) {
-        User user = userRepository.findByUsername(name);
+    public Optional<User> findByUsername(String name) {
+        Optional<User> user = userRepository.findByUsername(name);
         return user;
     }
 
     @Transactional
-    public User findById(Long id) {
-        User user = userRepository.findById(id).get();
+    public Optional<User> findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
         return user;
     }
 
