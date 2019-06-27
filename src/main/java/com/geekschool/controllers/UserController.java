@@ -2,7 +2,6 @@ package com.geekschool.controllers;
 
 import com.geekschool.constants.Status;
 import com.geekschool.dto.UserDto;
-import com.geekschool.entity.User;
 import com.geekschool.mapper.UserMapper;
 import com.geekschool.service.UserService;
 import lombok.AllArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,9 +29,9 @@ public class UserController {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        Optional<User> user = userService.findByUsername(username);
+        UserDto user = userService.findByUsername(username);
 
-        return userMapper.convertToUserDto(user.get());
+        return user;
     }
 
     @GetMapping("admin")

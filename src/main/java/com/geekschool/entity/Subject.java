@@ -1,6 +1,5 @@
 package com.geekschool.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.geekschool.constants.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;

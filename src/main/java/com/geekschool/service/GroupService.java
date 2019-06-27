@@ -1,7 +1,10 @@
 package com.geekschool.service;
 
+import com.geekschool.dto.GroupDto;
 import com.geekschool.entity.Group;
 import com.geekschool.entity.User;
+import com.geekschool.mapper.GroupMapper;
+import com.geekschool.mapper.UserMapper;
 import com.geekschool.repository.GroupRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -18,6 +20,8 @@ import java.util.Set;
 public class GroupService {
 
     private GroupRepository groupRepository;
+    private GroupMapper groupMapper;
+    private UserMapper userMapper;
 
     @Transactional
     public void saveGroup(Group group) {
@@ -25,9 +29,10 @@ public class GroupService {
     }
 
     @Transactional
-    public Optional<Group>  getGroupById(long id) {
-       Optional<Group> optionalGroup = groupRepository.findById(id);
-       return optionalGroup;
+    public GroupDto getGroupById(long id) {
+       return groupRepository.findById(id)
+               .map(group -> groupMapper.convertToGroupDto(group))
+               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Transactional
@@ -47,13 +52,11 @@ public class GroupService {
 
     @Transactional
     public void deleteUserFromGroup(long id, User user) {
-        Optional<Group> optionalGroup = getGroupById(id);
-        optionalGroup.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        Group group = optionalGroup.get();
-        Set<User> students = group.getStudents();
+        GroupDto groupDto = getGroupById(id);
+        Set<User> students = groupDto.getStudents();
         students.remove(user);
-        group.setStudents(students);
-        saveGroup(group);
+        groupDto.setStudents(students);
+        saveGroup(groupMapper.convertToGroup(groupDto));
     }
 
 }
