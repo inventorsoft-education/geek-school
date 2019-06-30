@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -25,27 +26,26 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     private AuthenticationUserDetailService authenticationUserDetailService;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                    .httpBasic().disable()
-                    .authorizeRequests()
-                    .antMatchers(LOGIN_ENDPOINT).permitAll()
-                    .antMatchers(ADMIN_ENDPOINT, "/api/groups/admin/**", "/api/users/admin/**", "/users", "/groups").hasAuthority(Role.ADMIN.getAuthority())
-                    .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
-                    .anyRequest().authenticated()
+                .httpBasic().disable()
+                .authorizeRequests()
+                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(ADMIN_ENDPOINT, "/api/lection/**", "/lection/**", "/api/groups/admin/**", "/api/users/admin/**", "/users", "/groups").hasAuthority(Role.ADMIN.getAuthority())
+                .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage(LOGIN_ENDPOINT)
-                    .loginProcessingUrl(LOGIN_ENDPOINT)
-                    .successHandler(new DefaultAuthenticationSuccessHandler())
+                .formLogin()
+                .loginPage(LOGIN_ENDPOINT)
+                .loginProcessingUrl(LOGIN_ENDPOINT)
+                .successHandler(new DefaultAuthenticationSuccessHandler())
                 .and()
-                    .logout().permitAll()
-                    .deleteCookies("JSESSIONID")
-                    .invalidateHttpSession(true)
-                    .logoutUrl(LOGOUT_ENDPOINT)
-                    .logoutSuccessUrl(LOGIN_ENDPOINT);
+                .logout()
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl(LOGIN_ENDPOINT);
     }
 
     @Bean
