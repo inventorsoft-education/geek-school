@@ -1,5 +1,6 @@
 package com.geekschool.controllers;
 
+import com.geekschool.constants.Role;
 import com.geekschool.constants.Status;
 import com.geekschool.dto.UserDto;
 import com.geekschool.mapper.UserMapper;
@@ -21,7 +22,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    private UserMapper userMapper;
 
     @GetMapping("current")
     @ResponseStatus(HttpStatus.OK)
@@ -32,6 +32,14 @@ public class UserController {
         UserDto user = userService.findByUsername(username);
 
         return user;
+    }
+
+    @GetMapping("teacher")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDto> getTeacher() {
+        return userService.getAllUser().stream()
+                .filter(userDto -> userDto.getRole().equals(Role.TEACHER))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("admin")

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Current-lection</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+    <script type="text/javascript" src="/js/handlebars-v4.1.2.js"></script>
+</head>
+<body>
+<H1>current</H1>
+<div>
+    <form action="" id="contact-form">
+
+        <table id="my_page" class="table" data-link="row">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Teacher</th>
+            </tr>
+            </thead>
+            <tbody id="current_lection">
+            </tbody>
+        </table>
+        <script id="current-lection-entry" type="text/x-handlebars-template">
+           <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>{{description}}</td>
+            <td>{{course.name}}</td>
+            <td>{{teacher.username}}</td>
+            </tr>
+        </script>
+    </form>
+</div>
+
+<script type="text/javascript" src="/js/app/current-lection.js"></script>
+
+</body>
+</html>

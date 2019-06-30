@@ -25,14 +25,13 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     private AuthenticationUserDetailService authenticationUserDetailService;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                     .httpBasic().disable()
                     .authorizeRequests()
                     .antMatchers(LOGIN_ENDPOINT).permitAll()
-                    .antMatchers(ADMIN_ENDPOINT, "/api/groups/admin/**", "/api/users/admin/**", "/users", "/groups").hasAuthority(Role.ADMIN.getAuthority())
+                    .antMatchers(ADMIN_ENDPOINT, "/api/lection", "/lection", "/api/groups/admin/**", "/api/users/admin/**", "/users", "/groups").hasAuthority(Role.ADMIN.getAuthority())
                     .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
                     .anyRequest().authenticated()
                 .and()
@@ -41,7 +40,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl(LOGIN_ENDPOINT)
                     .successHandler(new DefaultAuthenticationSuccessHandler())
                 .and()
-                    .logout().permitAll()
+                    .logout()
                     .deleteCookies("JSESSIONID")
                     .invalidateHttpSession(true)
                     .logoutUrl(LOGOUT_ENDPOINT)
