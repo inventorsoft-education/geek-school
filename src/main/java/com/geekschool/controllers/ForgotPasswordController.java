@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -34,11 +35,17 @@ public class ForgotPasswordController {
 
         UUID uuid = UUID.randomUUID();
         String link = forgotPasswordService.createForgotPasswordLink(uuid);
-        User user = userRepository.findByUsername(login);
-        invitationService.createInvitedToken(uuid, user);
-        mailSenderService.sendMessage(user.getEmail(), link);
+        Optional<User> user1 = userRepository.findByUsername(login);
+        if(user1.isPresent()){
+           User user = user1.get();
+            invitationService.createInvitedToken(uuid, user);
+            mailSenderService.sendMessage(user.getEmail(), link);
 
-        return "blog-home";
+            return "blog-home";
+        }
+        else {
+            return null; //TODO sth
+        }
     }
 
     @GetMapping(value = "/forgotPassword")
