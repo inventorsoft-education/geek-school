@@ -1,7 +1,6 @@
-package com.geekschool.security;
+package com.geekschool.config.security;
 
-import com.geekschool.entity.User;
-import com.geekschool.mapper.UserDtoFactory;
+import com.geekschool.mapper.UserMapper;
 import com.geekschool.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,14 +13,14 @@ import org.springframework.stereotype.Service;
 public class AuthenticationUserDetailService implements UserDetailsService {
 
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(name);
-        if (user == null) {
-            throw new UsernameNotFoundException("User with usernamae " + name + " not found");
-        }
+        AuthenticationUser user = userRepository.findByUsername(name)
+                    .map(u -> userMapper.convertToAuthenticationUser(u))
+                    .orElseThrow(() -> new UsernameNotFoundException("User with usernamae " + name + " not found"));
 
-        return UserDtoFactory.convertToAuthenticationUser(user);
+        return user;
     }
 }

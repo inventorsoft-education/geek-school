@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Current</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/handlebars-v4.1.2.js}"></script>
+
+</head>
+<body>
+<H1>Current</H1>
+<div>
+    <table id="my_page" class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">User name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+        </tr>
+        </thead>
+        <tbody id="current_user">
+        </tbody>
+    </table>
+    <script id="entry" type="text/x-handlebars-template">
+            <td>{{username}}</td>
+            <td>{{email}}</td>
+            <td>{{role}}</td>
+
+    </script>
+
+    <script>
+        $(document).ready(function() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/users/current",
+                        dataType: "json",
+                        cache: false,
+                        success: function(response) {
+                            var source   = document.getElementById("entry").innerHTML;
+                            var template = Handlebars.compile(source);
+                               $('#my_page').append(template(response));
+                        }
+                    })
+                });
+    </script>
+</div>
+</body>
+</html>

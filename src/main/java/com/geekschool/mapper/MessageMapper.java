@@ -2,10 +2,12 @@ package com.geekschool.mapper;
 
 import com.geekschool.dto.MessageDto;
 import com.geekschool.entity.Message;
+import org.springframework.stereotype.Component;
 
-public class MessageDtoFactory {
+@Component
+public class MessageMapper {
 
-    public static MessageDto convertToMessageDto(Message message) {
+    public MessageDto convertToMessageDto(Message message) {
         return new MessageDto(
                 message.getId(),
                 message.getSubject(),

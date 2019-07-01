@@ -1,13 +1,15 @@
 package com.geekschool.mapper;
 
+import com.geekschool.config.security.AuthenticationUser;
 import com.geekschool.dto.AuthenticationLoginDto;
 import com.geekschool.dto.UserDto;
 import com.geekschool.entity.User;
-import com.geekschool.security.AuthenticationUser;
+import org.springframework.stereotype.Component;
 
-public class UserDtoFactory {
+@Component
+public class UserMapper {
 
-    public static UserDto convertToUserDto(User user) {
+    public UserDto convertToUserDto(User user) {
         return new UserDto(
                 user.getId(),
                 user.getUsername(),
@@ -15,17 +17,19 @@ public class UserDtoFactory {
                 user.getLastname(),
                 user.getEmail(),
                 user.getStatus(),
-                user.getRole());
+                user.getRole(),
+                user.getGroups());
     }
 
-    public static AuthenticationLoginDto convertToAuthenticationLoginDto(User user) {
+    public AuthenticationLoginDto convertToAuthenticationLoginDto(User user) {
         return new AuthenticationLoginDto(
                 user.getUsername(),
                 user.getPassword());
     }
 
-    public static AuthenticationUser convertToAuthenticationUser(User user) {
-        return new AuthenticationUser(user.getId(),
+    public AuthenticationUser convertToAuthenticationUser(User user) {
+        return new AuthenticationUser(
+                user.getId(),
                 user.getUsername(),
                 user.getFirstname(),
                 user.getLastname(),

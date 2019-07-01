@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Lection</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/handlebars-v4.1.2.js}"></script>
+
+</head>
+<body>
+<H1>Lection</H1>
+<div>
+    <table id="my_page" class="table table-striped table-hover" data-link="row">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+        </thead>
+        <tbody id="lection_list">
+        </tbody>
+    </table>
+    <script id="entry" type="text/x-handlebars-template">
+        <tr role="button" data-href="/lection/{{id}}">
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{description}}</td>
+        </tr>
+    </script>
+</div>
+
+<button id="add_lection_btn">Add lection</button>
+
+<div class="popup" id="new_lection" style="display:none">
+    <div class="object" style="text-align: center">
+        <form action="" id="contact-form" name="new_lection">
+            <p>
+                <b>New lection :</b>
+                name
+                <input id="input_name" type="text">
+                description
+                <input id="input_description" type="text">
+                teacher
+                <input type="text" name="teachers" id="teacher" list="input_teacher" placeholder="teacher">
+                <datalist id="input_teacher">
+
+                </datalist>
+                subject
+                <input type="text" name="subjects" id="subjects" list="input_subject" placeholder="subject">
+                <datalist id="input_subject">
+
+                </datalist>
+
+                <input type="submit" id="btn_ok" value="ok">
+            </p>
+        </form>
+    </div>
+</div>
+
+<script id="lection_subject" type="text/x-handlebars-template">
+    <option name="{{id}}" id="group_id">{{name}}</option>
+</script>
+<script id="lection_teacher" type="text/x-handlebars-template">
+    <option name="{{id}}" id="id_teacher">{{username}}</option>
+</script>
+
+<script type="text/javascript" src="js/app/lection.js"></script>
+
+</body>
+</html>

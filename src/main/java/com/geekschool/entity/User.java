@@ -1,5 +1,6 @@
 package com.geekschool.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.geekschool.constants.Role;
 import com.geekschool.constants.Status;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -41,4 +43,8 @@ public class User {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "students")
+    private List<Group> groups;
 }
