@@ -74,4 +74,18 @@ public class UserService {
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
+    public User createUserByToken(String formType, String email){
+        User user = new User();
+        user.setEmail(email);
+        if(Role.STUDENT.toString().equals(formType)){
+            user.setRole(Role.STUDENT);
+        }
+        else {
+            user.setRole(Role.TEACHER);
+        }
+
+        userRepository.save(user);
+        return user;
+    }
 }
