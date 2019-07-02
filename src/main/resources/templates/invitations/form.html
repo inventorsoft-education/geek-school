@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layouts/layout :: headerFragment">
+    <title id="pageTitle">Invitation FORM</title>
+</head>
+<body>
+<div th:insert="layouts/layout :: header"></div>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="section-top-border">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <h3 id="formTitle" class="mb-30">INVITATION FORM</h3>
+                    <form id="sendInvitationForm" th:action="@{/saveUser}" th:object="${user}" class="button-group-area" method="post">
+                        <input type="hidden" id="id" name="id" th:value="${invitedToken.getUser().getId()}" th:field="*{id}">
+                        <input type="hidden" id="email" name="email" th:value="${invitedToken.getUser().getEmail()}" th:field="*{email}">
+                        <input type="hidden" id="role" name="role" th:value="${invitedToken.getUser().getRole()}" th:field="*{role}">
+                        <div class="mt-10">
+                            <input type="text" id="username" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required class="single-input" th:field="*{username}">
+                        </div>
+                        <div class="mt-10">
+                            <input type="text" id="firstName" name="firstName" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First name'" required class="single-input" th:field="*{firstname}">
+                        </div>
+                        <div class="mt-10">
+                            <input type="text" id="lastName" name="lastName" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last name'" required class="single-input" th:field="*{lastname}">
+                        </div>
+                        <div class="mt-10">
+                            <input type="password" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required class="single-input" th:field="*{password}">
+                        </div>
+                        <button id="registrationButton" class="genric-btn success">REGISTRATION</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="layouts/layout :: footer"></div>
+</body>
+</html>
