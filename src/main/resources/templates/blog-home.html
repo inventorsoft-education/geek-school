@@ -1,26 +1,11 @@
 	<!DOCTYPE html>
 	<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org">
-	<head th:include="layout :: headerFragment">
+	<head th:include="layouts/layout :: headerFragment">
 		<title id="pageTitle">Blog Home</title>
 
 	</head>
 		<body>
-		<div th:insert="layout :: header"></div>
-			<!-- start banner Area -->
-			<section class="banner-area relative" id="home">
-				<div class="overlay overlay-bg"></div>
-				<div class="container">
-					<div class="row d-flex align-items-center justify-content-center">
-						<div class="about-content col-lg-12">
-							<h1 class="text-white">
-								Blog Home
-							</h1>
-							<p class="text-white link-nav"><a th:href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a th:href="blog-home.html"> Blog Home</a></p>
-						</div>
-					</div>
-				</div>
-			</section>
-			<!-- End banner Area -->
+		<div th:insert="layouts/layout :: header"></div>
 			
 			<!-- Start blog-posts Area -->
 			<section class="blog-posts-area section-gap">
@@ -312,7 +297,7 @@
 				</div>	
 			</section>
 			<!-- End blog-posts Area -->
-			<div th:insert="layout :: footer">...</div>
+			<div th:insert="layouts/layout :: footer">...</div>
 		</body>
 	</html>
 
