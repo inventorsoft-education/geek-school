@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layouts/layout :: headerFragment">
+    <title id="pageTitle">Invitation Page</title>
+</head>
+<body>
+<div th:insert="layouts/layout :: header"></div>
+
+<div class="row">
+    <div class="col-md-6">
+        <section class="button-area">
+            <div class="container border-top-generic">
+                <div class="button-group-area">
+                    <a href="#" id="studentLink" class="genric-btn primary-border e-large">STUDENT LINK</a>
+                </div>
+                <div class="button-group-area mt-10">
+                    <a href="#" id="teacherLink" class="genric-btn primary-border e-large">TEACHER LINK</a>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-6">
+        <div class="section-top-border">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <h3 id="formTitle" class="mb-30">STUDENT'S EMAIL</h3>
+                    <form id="sendInvitationForm" th:action="@{/invitation}" class="button-group-area" method="post">
+                        <input id="formType" name="formType" type="hidden" value="STUDENT">
+                        <div class="mt-10">
+                            <input type="email" id="email" name="email" placeholder="Email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required class="single-input">
+                        </div>
+                        <button id="inviteButton" class="genric-btn success">INVITE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="layouts/layout :: footer"></div>
+<script>
+    $('#studentLink').on('click', function () {
+        $('#formTitle').html("STUDENT'S EMAIL")
+        $('#formType').val('STUDENT')
+        $('#email').val("")
+    })
+
+    $('#teacherLink').on('click', function () {
+        $('#formTitle').html("TEACHER'S EMAIL")
+        $('#formType').val('TEACHER')
+        $('#email').val("")
+    })
+
+
+    $("#inviteButton").on('click', function () {
+        formType = $('#formType').val()
+        email = $('#email').val()
+        json = { "formType" : formType, "email" : email};
+
+        $.ajax({
+            type: 'post',
+            url: $("#sendInvitationForm").attr( "action"),
+            data: JSON.stringify(json)
+        })
+            .always(function () {
+                alert("Success!")
+                window.location.assign('http://localhost:8080/invitation')
+            })
+    })
+
+</script>
+</body>
+</html>
