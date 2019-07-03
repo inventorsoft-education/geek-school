@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:include="layouts/layout :: headerFragment">
+
+    <title id="pageTitle">Current user</title>
+</head>
+<body>
+<div th:insert="layouts/layout :: header"></div>
+
+<div class="container">
+    <div class="section-top-border">
+        <div class="col-md-4 mt-sm-30">
+            <div class="container-fluid well span6">
+                <div class="row-fluid">
+
+                    <div class="span8" id="my_page">
+
+                    </div>
+
+                    <div class="span2">
+                        <div class="btn-group">
+                            <a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+                                Action
+                                <span class="icon-cog icon-white"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/updateUserByPassword"><span class="icon-wrench"></span>Change password</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="entry" type="text/x-handlebars-template">
+    <h3>{{username}}</h3>
+    <h6>Email: {{email}}</h6>
+    <h6>Role: {{role}}</h6>
+</script>
+
+<script>
+        $(document).ready(function() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/users/current",
+                        dataType: "json",
+                        cache: false,
+                        success: function(response) {
+                            var source   = document.getElementById("entry").innerHTML;
+                            var template = Handlebars.compile(source);
+                               $('#my_page').append(template(response));
+                        }
+                    })
+                });
+
+</script>
+</body>
+</html>

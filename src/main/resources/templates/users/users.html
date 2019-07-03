@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="layouts/layout :: headerFragment">
+
+    <title id="pageTitle">Users</title>
+</head>
+<body>
+<div th:insert="layouts/layout :: header"></div>
+
+
+<div class="container">
+    <div class="section-top-border">
+        <h3 class="mb-30">Users</h3>
+        <div class="progress-table-wrap">
+            <div class="progress-table">
+                <div class="table-head">
+                    <div class="serial">#</div>
+                    <div class="visit">Username</div>
+                    <div class="percentage">Email</div>
+                    <div class="role">Role</div>
+                    <div class="country">Active</div>
+                    <div class="remove">Remove</div>
+                </div>
+
+                <div class="table" id="user_data">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <script id="entry-template" type="text/x-handlebars-template">
+            <div class="table-row">
+                <div class="serial">{{id}}</div>
+                <div class="visit">{{username}}</div>
+                <div class="percentage">{{email}}</div>
+                <div class="role">{{role}}</div>
+                <div class="country">
+                    <div class="primary-switch" rel="{{id}}" id="checkbox_user">
+                        <input type="checkbox" id="{{id}}">
+                        <label for="{{id}}"></label>
+                    </div>
+                </div>
+                <div class="remove">
+                    <div class="primary-switch" resource="{{id}}" rel="{{username}}" id="checkbox_delete_user">
+                        <input type="checkbox" id="{{username}}">
+                        <label for="{{username}}"></label>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/javascript" src="js/app/users.js"></script>
+    </div>
+
+
+    <div th:insert="layouts/layout :: footer">...</div>
+
+</body>
+</html>

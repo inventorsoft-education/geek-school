@@ -4,6 +4,7 @@ import com.geekschool.entity.User;
 import com.geekschool.service.ForgotPasswordService;
 import com.geekschool.service.InvitationService;
 import com.geekschool.service.MailSenderService;
+import com.geekschool.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +15,13 @@ import java.util.UUID;
 @RequestMapping
 public class InvitationRestController {
 
-    private UserServiceImpl userService;
+    private UserService userService;
     private MailSenderService mailSenderService;
     private ForgotPasswordService forgotPasswordService;
     private InvitationService invitationService;
 
     @Autowired
-    public InvitationRestController(UserServiceImpl userService, MailSenderService mailSenderService1, ForgotPasswordService forgotPasswordService1, InvitationService invitationService1){
+    public InvitationRestController(UserService userService, MailSenderService mailSenderService1, ForgotPasswordService forgotPasswordService1, InvitationService invitationService1){
         this.userService = userService;
         this.mailSenderService = mailSenderService1;
         this.forgotPasswordService = forgotPasswordService1;
