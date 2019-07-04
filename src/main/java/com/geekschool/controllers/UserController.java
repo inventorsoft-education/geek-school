@@ -2,7 +2,6 @@ package com.geekschool.controllers;
 
 import com.geekschool.constants.Status;
 import com.geekschool.dto.UserDto;
-import com.geekschool.entity.User;
 import com.geekschool.mapper.UserMapper;
 import com.geekschool.service.UserService;
 import lombok.AllArgsConstructor;
@@ -30,18 +29,18 @@ public class UserController {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        User user = userService.findByUsername(username);
+        UserDto user = userService.findByUsername(username);
 
-        return userMapper.convertToUserDto(user);
+        return user;
     }
 
-    @GetMapping
+    @GetMapping("admin")
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers() {
         return userService.getAllUser();
     }
 
-    @GetMapping("status")
+    @GetMapping("admin/status")
     public List<Status> getStatus() {
         return Arrays.stream(Status.values()).collect(Collectors.toList());
     }

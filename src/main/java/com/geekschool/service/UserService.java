@@ -7,8 +7,10 @@ import com.geekschool.entity.User;
 import com.geekschool.mapper.UserMapper;
 import com.geekschool.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -45,15 +47,17 @@ public class UserService {
     }
 
     @Transactional
-    public User findByUsername(String name) {
-        User user = userRepository.findByUsername(name);
-        return user;
+    public UserDto findByUsername(String name) {
+        return userRepository.findByUsername(name)
+                .map(user -> userMapper.convertToUserDto(user))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Transactional
-    public User findById(Long id) {
-        User user = userRepository.findById(id).get();
-        return user;
+    public UserDto findById(Long id) {
+        return userRepository.findById(id)
+                .map(user -> userMapper.convertToUserDto(user))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Transactional

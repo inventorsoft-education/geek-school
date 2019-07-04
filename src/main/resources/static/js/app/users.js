@@ -2,7 +2,7 @@ $(document).ready(function() {
                 $("#load_table").click(function() {
                     $.ajax({
                         type: 'GET',
-                        url: 'api/users',
+                        url: 'api/users/admin',
                         dataType: 'json',
                         cache: false,
                         traditional: true,
@@ -17,7 +17,7 @@ $(document).ready(function() {
                       })
                       $.ajax({
                         type: 'GET',
-                        url: 'api/users/status',
+                        url: 'api/users/admin/status',
                         dataType: 'json',
                         cache: false,
                         traditional: true,
@@ -41,9 +41,9 @@ $(document).ready(function() {
                                     $.ajax({
                                         type: 'PUT',
                                         url: 'api/users/' + idBtn,
-                                        headers: {
-                                            headerName : token
-                                        },
+                                         beforeSend: function(xhr) {
+                                                    xhr.setRequestHeader(headerName, token);
+                                                    },
                                         data: {
                                             'status': status
                                         },
