@@ -3,6 +3,8 @@ package com.geekschool.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
@@ -11,6 +13,7 @@ import javax.persistence.*;
 @Table(name = "lection")
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public class Lection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +27,9 @@ public class Lection {
     @JoinColumn(name = "teacher_id")
     private User teacher;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinTable(name = "subject_lections",
             joinColumns = {@JoinColumn(name = "subject_id")},
             inverseJoinColumns = {@JoinColumn (name = "lection_id")})
-    private Subject course;
+    private Subject course;*/
 }

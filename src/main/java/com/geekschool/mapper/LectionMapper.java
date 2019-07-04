@@ -12,7 +12,6 @@ public class LectionMapper {
                 lection.getId(),
                 lection.getName(),
                 lection.getDescription(),
-                lection.getTeacher(),
-                lection.getCourse());
+                lection.getTeacher());
     }
 }

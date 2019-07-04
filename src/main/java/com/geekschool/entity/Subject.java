@@ -27,8 +27,8 @@ public class Subject {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @JsonIgnore
+/*    @JsonIgnore
     @OneToMany(mappedBy = "course")
-    private List<Lection> lections;
+    private List<Lection> lections;*/
 
 }

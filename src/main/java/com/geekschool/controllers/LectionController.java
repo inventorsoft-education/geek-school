@@ -46,12 +46,10 @@ public class LectionController {
 
         User teacher = userRepository.findById(teacher_id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        Subject subject = subjectService.findById(subject_id);
 
         lection.setName(name);
         lection.setDescription(description);
         lection.setTeacher(teacher);
-        lection.setCourse(subject);
 
         return lectionService.createLection(lection);
     }

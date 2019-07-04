@@ -21,5 +21,4 @@ public class SubjectDto {
 
     private Status status;
 
-    private List<Lection> lections;
 }

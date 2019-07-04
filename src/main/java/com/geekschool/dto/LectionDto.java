@@ -14,5 +14,4 @@ public class LectionDto {
     private String name;
     private String description;
     private User teacher;
-    private Subject course;
 }

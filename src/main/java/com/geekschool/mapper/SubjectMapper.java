@@ -12,7 +12,6 @@ public class SubjectMapper {
                 subject.getId(),
                 subject.getName(),
                 subject.getDescription(),
-                subject.getStatus(),
-                subject.getLections());
+                subject.getStatus());
     }
 }
