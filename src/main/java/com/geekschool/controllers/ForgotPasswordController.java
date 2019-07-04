@@ -34,7 +34,7 @@ public class ForgotPasswordController {
 
         UUID uuid = UUID.randomUUID();
         String link = forgotPasswordService.createForgotPasswordLink(uuid);
-        User user = userRepository.findByUsername(login);
+        User user = userRepository.findByUsername(login).get();
         invitationService.createInvitedToken(uuid, user);
         mailSenderService.sendMessage(user.getEmail(), link);
 
