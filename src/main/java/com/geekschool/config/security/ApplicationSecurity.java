@@ -1,4 +1,4 @@
-package com.geekschool.security;
+package com.geekschool.config.security;
 
 import com.geekschool.constants.Role;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                     .httpBasic().disable()
                     .authorizeRequests()
                     .antMatchers(LOGIN_ENDPOINT).permitAll()
-                    .antMatchers(ADMIN_ENDPOINT).hasAuthority(Role.ADMIN.getAuthority())
+                    .antMatchers(ADMIN_ENDPOINT, "/api/users", "/users").hasAuthority(Role.ADMIN.getAuthority())
                     .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
                     .anyRequest().authenticated()
                 .and()
@@ -42,12 +42,10 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                     .successHandler(new DefaultAuthenticationSuccessHandler())
                 .and()
                     .logout()
-                    .deleteCookies("remove")
+                    .deleteCookies("JSESSIONID")
                     .invalidateHttpSession(true)
                     .logoutUrl(LOGOUT_ENDPOINT)
-                    .logoutSuccessUrl(LOGIN_ENDPOINT)
-                .and()
-                    .csrf().disable();
+                    .logoutSuccessUrl(LOGIN_ENDPOINT);
     }
 
     @Bean

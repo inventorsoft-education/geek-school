@@ -1,4 +1,4 @@
-package com.geekschool.security;
+package com.geekschool.config.security;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class DefaultAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-	private static final String HOME_PAGE = "/";
+	private static final String HOME_PAGE = "/block-home";
 
 	@Override
 	public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {

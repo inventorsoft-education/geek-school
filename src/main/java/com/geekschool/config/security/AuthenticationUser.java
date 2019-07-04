@@ -1,4 +1,4 @@
-package com.geekschool.security;
+package com.geekschool.config.security;
 
 import com.geekschool.constants.Role;
 import com.geekschool.constants.Status;
@@ -42,12 +42,20 @@ public class AuthenticationUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        if (status.equals(Status.NOT_ACTIVE)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        if (status.equals(Status.DELETED)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
