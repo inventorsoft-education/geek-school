@@ -4,7 +4,6 @@ import com.geekschool.entity.User;
 import com.geekschool.service.ForgotPasswordService;
 import com.geekschool.service.InvitationService;
 import com.geekschool.service.MailSenderService;
-import com.geekschool.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

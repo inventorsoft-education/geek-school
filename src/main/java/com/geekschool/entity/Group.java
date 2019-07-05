@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,11 +22,11 @@ public class Group {
 
     private String description;
 
-    @ManyToMany
+    @ManyToOne
     @JoinTable(name = "group_subject",
             joinColumns = {@JoinColumn(name = "group_id")},
             inverseJoinColumns = {@JoinColumn(name = "subject_id")})
-    private List<Subject> subjects;
+    private Subject subjects;
 
 
     @ManyToMany

@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -19,7 +18,7 @@ public class GroupDto {
 
     private String description;
 
-    private List<Subject> subjects;
+    private Subject subjects;
 
     private Set<User> students;
 }

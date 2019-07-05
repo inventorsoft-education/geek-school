@@ -31,7 +31,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .authorizeRequests()
-                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(LOGIN_ENDPOINT, "/css/**", "/js/**", "/scss/**", "/img/**", "/fonts/**").permitAll()
                 .antMatchers(ADMIN_ENDPOINT, "/api/lection/**", "/lection/**", "/api/groups/admin/**", "/api/users/admin/**", "/users", "/groups").hasAuthority(Role.ADMIN.getAuthority())
                 .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
                 .anyRequest().authenticated()
@@ -44,7 +44,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .logout()
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutRequestMatcher(new AntPathRequestMatcher(LOGOUT_ENDPOINT))
                 .logoutSuccessUrl(LOGIN_ENDPOINT);
     }
 
