@@ -23,10 +23,14 @@
                     <h3 id="formTitle" class="mb-30">STUDENT USERNAME</h3>
                     <input id="formType" name="formType" type="hidden" value="STUDENT">
                     <div class="mt-10">
-                        <input type="text" id="name_user" rev="" name="username" placeholder="username"
+                        <input type="text" id="name_user" name="username" placeholder="username"
                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'username'" required
-                               class="single-input">
+                               class="single-input" value="">
+                        <div class="col-sm-10">
+                            <label style="font-size:10px" id="tagPlaces"></label>
+                        </div>
                     </div>
+
                     <button id="add_student" class="genric-btn success">ADD</button>
                     <button id="delete_student" class="genric-btn success">DELETE</button>
                 </div>
@@ -35,7 +39,7 @@
     </div>
     <script id="group-handlebars" type="text/x-handlebars-template">
         <div class="button-group-area">
-            <a href="#" id="group_id" name="{{id}}" class="genric-btn primary-border e-large">{{name}}</a>
+            <a href="#" id="group_id" name="{{name}}" rev="{{id}}" class="genric-btn primary-border e-large">{{name}}</a>
         </div>
     </script>
 </div>

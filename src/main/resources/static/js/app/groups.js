@@ -34,7 +34,7 @@ $(document).ready(function() {
     })
     $("#add_student").on('click', function() {
         var user_name = $('#name_user').val();
-        var group_id = $('#name_user').attr("rev");
+        var group_id = $('#tagPlaces').attr("value");
         $.ajax({
             type: 'PUT',
             url: 'api/groups/admin',
@@ -49,8 +49,10 @@ $(document).ready(function() {
         })
     })
     $('#input_group').on('click', '#group_id', function() {
-        var group_id = $(this).attr('name');
-        $('#name_user').attr("rev", group_id);
+        var group_id = $(this).attr('rev');
+        var group_name = $(this).attr('name');
+        $('#tagPlaces').attr("value", group_id);
+        $('#tagPlaces').text(group_name);
     });
 
 })
