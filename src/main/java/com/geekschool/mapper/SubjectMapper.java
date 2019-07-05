@@ -1,18 +1,18 @@
 package com.geekschool.mapper;
 
 import com.geekschool.dto.SubjectDto;
-import com.geekschool.entity.Subject;
+import com.geekschool.entity.Course;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SubjectMapper {
 
-    public SubjectDto convertToSubjectDto(Subject subject) {
+    public SubjectDto convertToSubjectDto(Course course) {
         return new SubjectDto(
-                subject.getId(),
-                subject.getName(),
-                subject.getDescription(),
-                subject.getStatus(),
-                subject.getLections());
+                course.getId(),
+                course.getName(),
+                course.getDescription(),
+                course.getStatus(),
+                course.getLections());
     }
 }

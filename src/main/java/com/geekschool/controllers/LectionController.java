@@ -2,7 +2,7 @@ package com.geekschool.controllers;
 
 import com.geekschool.dto.LectionDto;
 import com.geekschool.entity.Lection;
-import com.geekschool.entity.Subject;
+import com.geekschool.entity.Course;
 import com.geekschool.entity.User;
 import com.geekschool.repository.UserRepository;
 import com.geekschool.service.LectionService;
@@ -46,12 +46,12 @@ public class LectionController {
 
         User teacher = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        Subject subject = subjectService.findByName(subjectName);
+        Course course = subjectService.findByName(subjectName);
 
         lection.setName(name);
         lection.setDescription(description);
         lection.setTeacher(teacher);
-        lection.setCourse(subject);
+        lection.setCourse(course);
 
         return lectionService.createLection(lection);
     }

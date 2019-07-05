@@ -23,10 +23,4 @@ public class Lection {
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private User teacher;
-
-    @ManyToOne
-    @JoinTable(name = "subject_lections",
-            joinColumns = {@JoinColumn(name = "subject_id")},
-            inverseJoinColumns = {@JoinColumn (name = "lection_id")})
-    private Subject course;
 }

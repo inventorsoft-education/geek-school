@@ -1,7 +1,6 @@
 package com.geekschool.dto;
 
-import com.geekschool.entity.Subject;
-import com.geekschool.entity.User;
+import com.geekschool.entity.Course;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +13,5 @@ public class LectionDto {
     private String name;
     private String description;
     private UserDto teacher;
-    private Subject course;
+    private Course course;
 }

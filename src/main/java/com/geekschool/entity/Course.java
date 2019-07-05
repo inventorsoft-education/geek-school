@@ -11,10 +11,10 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "subject")
+@Table(name = "course")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Subject {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

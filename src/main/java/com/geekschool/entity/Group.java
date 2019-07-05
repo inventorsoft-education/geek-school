@@ -26,7 +26,7 @@ public class Group {
     @JoinTable(name = "group_subject",
             joinColumns = {@JoinColumn(name = "group_id")},
             inverseJoinColumns = {@JoinColumn(name = "subject_id")})
-    private Subject subjects;
+    private Course course;
 
 
     @ManyToMany
