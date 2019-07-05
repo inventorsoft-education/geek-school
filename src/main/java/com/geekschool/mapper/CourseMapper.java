@@ -5,7 +5,7 @@ import com.geekschool.entity.Course;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SubjectMapper {
+public class CourseMapper {
 
     public SubjectDto convertToSubjectDto(Course course) {
         return new SubjectDto(

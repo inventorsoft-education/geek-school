@@ -12,7 +12,7 @@ public class GroupMapper {
                 group.getId(),
                 group.getName(),
                 group.getDescription(),
-                group.getSubjects(),
+                group.getCourse(),
                 group.getStudents());
     }
 
@@ -20,7 +20,7 @@ public class GroupMapper {
         return new Group(groupDto.getId(),
                 groupDto.getName(),
                 groupDto.getDescription(),
-                groupDto.getSubjects(),
+                groupDto.getSubject(),
                 groupDto.getStudents());
     }
 }

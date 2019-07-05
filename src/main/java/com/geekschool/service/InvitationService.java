@@ -15,11 +15,15 @@ import static java.lang.Integer.valueOf;
 @Service
 public class InvitationService {
 
-    @Autowired
     private InvitedTokenRepository invitedTokenRepository;
 
-    @Value("${invitation.default.link}")
     private String timeForLink;
+
+    public InvitationService(final InvitedTokenRepository invitedTokenRepository,
+                             @Value("${invitation.default.link}") final String timeForLink) {
+        this.invitedTokenRepository = invitedTokenRepository;
+        this.timeForLink = timeForLink;
+    }
 
     public void createInvitedToken(UUID uuid, User user){
         InvitedToken invitedToken = new InvitedToken();

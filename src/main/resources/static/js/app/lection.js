@@ -44,7 +44,7 @@ $(document).ready(function() {
     function loadCourse() {
         $.ajax({
             type: 'GET',
-            url: 'api/subjects',
+            url: 'api/subject',
             dataType: 'json',
             cache: false,
             traditional: true,
@@ -134,7 +134,7 @@ $(document).ready(function() {
             var name = $('#input_name').val();
             var description = $('#input_description').val();
             var teacher_name = $('#teacher').val();
-            var subject_name = $('#subjects').val();
+            var subject_name = $('#subject').val();
 
             $.ajax({
                 type: "POST",

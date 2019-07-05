@@ -18,7 +18,7 @@ public class GroupDto {
 
     private String description;
 
-    private Course subjects;
+    private Course subject;
 
     private Set<User> students;
 }

@@ -1,11 +1,13 @@
 package com.geekschool.service;
 
 import com.geekschool.dto.GroupDto;
+import com.geekschool.dto.UserDto;
 import com.geekschool.entity.Group;
 import com.geekschool.entity.User;
 import com.geekschool.mapper.GroupMapper;
 import com.geekschool.mapper.UserMapper;
 import com.geekschool.repository.GroupRepository;
+import com.geekschool.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,8 +22,8 @@ import java.util.Set;
 public class GroupService {
 
     private GroupRepository groupRepository;
+    private UserService userService;
     private GroupMapper groupMapper;
-    private UserMapper userMapper;
 
     @Transactional
     public void saveGroup(Group group) {
@@ -30,33 +32,25 @@ public class GroupService {
 
     @Transactional
     public GroupDto getGroupById(long id) {
-       return groupRepository.findById(id)
-               .map(group -> groupMapper.convertToGroupDto(group))
-               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return groupRepository.findById(id)
+                .map(group -> groupMapper.convertToGroupDto(group))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @Transactional
-    public Group findByName(String name) {
-        return groupRepository.findByName(name);
-    }
-
+    // TODO: 2019-07-05 fedya ne provtykav
     @Transactional
     public List<Group> getGroups() {
         return groupRepository.findAll();
     }
 
     @Transactional
-    public void deleteGroupById(long id) {
-        groupRepository.deleteById(id);
-    }
-
-    @Transactional
     public void deleteUserFromGroup(long id, User user) {
-        GroupDto groupDto = getGroupById(id);
-        Set<User> students = groupDto.getStudents();
+        Group group = groupRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));;
+        Set<User> students = group.getStudents();
         students.remove(user);
-        groupDto.setStudents(students);
-        saveGroup(groupMapper.convertToGroup(groupDto));
+        group.setStudents(students);
+        saveGroup(group);
     }
 
 }

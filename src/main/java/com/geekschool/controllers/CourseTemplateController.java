@@ -3,25 +3,22 @@ package com.geekschool.controllers;
 import com.geekschool.entity.CourseTemplate;
 import com.geekschool.entity.Lection;
 import com.geekschool.repository.LectionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Controller
 public class CourseTemplateController {
 
     private LectionRepository lectionRepository;
 
-    @Autowired
-    public CourseTemplateController(LectionRepository lectionRepository1){
-        this.lectionRepository = lectionRepository1;
-    }
-
+    // TODO: 2019-07-05 do not load data on template. Perhaps, refactor to view controller
     @GetMapping(value = "/createCourseTemplate")
-    public ModelAndView getCreateCourceTemplateForm() {
+    public ModelAndView getCreateCourseTemplateForm() {
         CourseTemplate courseTemplate = new CourseTemplate();
         ModelAndView mv = new ModelAndView();
         List<Lection> lections = lectionRepository.findAll();

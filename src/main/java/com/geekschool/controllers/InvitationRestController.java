@@ -1,18 +1,20 @@
 package com.geekschool.controllers;
 
+import com.geekschool.entity.Role;
 import com.geekschool.entity.User;
 import com.geekschool.service.ForgotPasswordService;
 import com.geekschool.service.InvitationService;
-import com.geekschool.service.MailSenderService;
+import com.geekschool.service.mail.MailSenderService;
 import com.geekschool.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.UUID;
 
+@AllArgsConstructor
 @RestController
-@RequestMapping
 public class InvitationRestController {
 
     private UserService userService;
@@ -20,18 +22,10 @@ public class InvitationRestController {
     private ForgotPasswordService forgotPasswordService;
     private InvitationService invitationService;
 
-    @Autowired
-    public InvitationRestController(UserService userService, MailSenderService mailSenderService1, ForgotPasswordService forgotPasswordService1, InvitationService invitationService1){
-        this.userService = userService;
-        this.mailSenderService = mailSenderService1;
-        this.forgotPasswordService = forgotPasswordService1;
-        this.invitationService = invitationService1;
-    }
-
-
+    // TODO: 2019-07-05 move transactional into service layer. move logic into service layer
     @Transactional
     @PostMapping(value = "/invitation")
-    public void sendInvitation(@RequestParam String formType, String email){
+    public void sendInvitation(@RequestParam Role formType, String email){
 
         UUID uuid = UUID.randomUUID();
         String link = forgotPasswordService.createTokenLink(uuid);

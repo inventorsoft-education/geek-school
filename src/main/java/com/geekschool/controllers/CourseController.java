@@ -1,7 +1,7 @@
 package com.geekschool.controllers;
 
 import com.geekschool.dto.SubjectDto;
-import com.geekschool.service.SubjectService;
+import com.geekschool.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +13,15 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/subjects")
-public class SubjectController {
+// TODO: 2019-07-05 fix url in js =)
+@RequestMapping("api/courses")
+public class CourseController {
 
-    private SubjectService subjectService;
+    private CourseService courseService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<SubjectDto> getSubjects() {
-        return subjectService.getSubjects();
+        return courseService.getSubjects();
     }
 }

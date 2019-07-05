@@ -1,7 +1,7 @@
 package com.geekschool.dto;
 
-import com.geekschool.constants.Role;
-import com.geekschool.constants.Status;
+import com.geekschool.entity.Role;
+import com.geekschool.entity.Status;
 import com.geekschool.entity.Group;
 import lombok.AllArgsConstructor;
 import lombok.Data;

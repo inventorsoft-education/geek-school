@@ -1,6 +1,6 @@
 package com.geekschool.dto;
 
-import com.geekschool.constants.Status;
+import com.geekschool.entity.Status;
 import com.geekschool.entity.Lection;
 import lombok.AllArgsConstructor;
 import lombok.Data;

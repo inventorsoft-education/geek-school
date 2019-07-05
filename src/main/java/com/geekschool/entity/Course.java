@@ -1,24 +1,30 @@
 package com.geekschool.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.geekschool.constants.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = {"id", "name"})
 @Entity
-@Table(name = "course")
+@Table(name = "course", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @AllArgsConstructor
 @NoArgsConstructor
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
 
@@ -27,7 +33,9 @@ public class Course {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    // TODO: 2019-07-05 please change it to @ManyToMany
     @JsonIgnore
+    @ToString.Exclude
     @OneToMany(mappedBy = "course")
     private List<Lection> lections;
 

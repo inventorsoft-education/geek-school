@@ -1,38 +1,41 @@
 package com.geekschool.controllers;
 
-import com.geekschool.constants.Role;
-import com.geekschool.constants.Status;
+import com.geekschool.config.security.AuthenticationUser;
 import com.geekschool.dto.UserDto;
+import com.geekschool.entity.Role;
+import com.geekschool.entity.Status;
 import com.geekschool.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@PreAuthorize("hasAuthority('ADMIN')")
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/users")
-public class UserResource {
+public class UserRestController {
 
-    @Autowired
     private UserService userService;
 
     @GetMapping("current")
     @ResponseStatus(HttpStatus.OK)
-    public UserDto getCurrentUser() {
-
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        UserDto user = userService.findByUsername(username);
-
-        return user;
+    public UserDto getCurrentUser(@AuthenticationPrincipal AuthenticationUser currentUser) {
+        return userService.findByUsername(currentUser.getUsername());
     }
 
+    // TODO: 2019-07-05 use dedicated query to filter only Teacher users
     @GetMapping("teacher")
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getTeacher() {
@@ -41,16 +44,13 @@ public class UserResource {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("admin")
+    // TODO: 2019-07-05 fix js
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers() {
         return userService.getAllUser();
     }
 
-    @GetMapping("admin/status")
-    public List<Status> getStatus() {
-        return Arrays.stream(Status.values()).collect(Collectors.toList());
-    }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)

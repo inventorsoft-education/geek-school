@@ -10,6 +10,7 @@ import com.geekschool.service.GroupService;
 import com.geekschool.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,23 +19,25 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
+// TODO: 2019-07-05 move api prefix to application.properties and use it here
 @RequestMapping("api/groups")
 public class GroupController {
 
     private GroupService groupService;
-    private UserService userService;
     private UserRepository userRepository;
     private UserMapper userMapper;
     private GroupMapper groupMapper;
 
+    // TODO: 2019-07-05 remove admin prefix and use @PreAuthorize for security checks
+    // TODO: 2019-07-05 refactor users loading to user service: define method to load users by group in userService
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("admin/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<UserDto> getStudentsOfGroupById(@PathVariable long id) {
+    public Set<UserDto> getStudentsOfGroupById(@PathVariable Long id) {
         GroupDto group = groupService.getGroupById(id);
-        Set<UserDto> students = group.getStudents().stream()
+        return group.getStudents().stream()
                 .map(u -> userMapper.convertToUserDto(u))
                 .collect(Collectors.toSet());
-        return students;
     }
 
     @GetMapping("admin")
@@ -46,6 +49,8 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
+    // TODO: 2019-07-05 change url POST /groups/{groupId}/users
+    // TODO: 2019-07-05 move logic into service layer
     @PutMapping("admin")
     @ResponseStatus(HttpStatus.OK)
     public void addUserToGroup(@RequestParam("group_id") long idGroup,
@@ -57,9 +62,9 @@ public class GroupController {
 
         group.getStudents().add(user);
 
-        groupService.saveGroup(groupMapper.convertToGroup(group));
     }
 
+    // TODO: 2019-07-05 move user loading into service layer
     @DeleteMapping("/admin/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUserFromGroup(@PathVariable long id,

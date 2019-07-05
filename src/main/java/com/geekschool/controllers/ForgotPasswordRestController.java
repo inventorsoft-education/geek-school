@@ -6,7 +6,7 @@ import com.geekschool.repository.InvitedTokenRepository;
 import com.geekschool.repository.UserRepository;
 import com.geekschool.service.ForgotPasswordService;
 import com.geekschool.service.InvitationService;
-import com.geekschool.service.MailSenderService;
+import com.geekschool.service.mail.MailSenderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
+// TODO: 2019-07-05 refactor to rest controller
 @Controller
 @AllArgsConstructor
-public class ForgotPasswordController {
+public class ForgotPasswordRestController {
 
     private ForgotPasswordService forgotPasswordService;
     private UserRepository userRepository;
@@ -41,11 +42,13 @@ public class ForgotPasswordController {
         return "blog-home";
     }
 
+    // TODO: 2019-07-05 refactor to view controller
     @GetMapping(value = "/forgotPassword")
     public String  getForgotPasswordForm(){
         return "admin/forgotPasswordForm";
     }
 
+    // TODO: 2019-07-05 add dedicated rest endpoint to check token existance/state
     @GetMapping(value = "/user/password/{token}")
     public ModelAndView getForgotPasswordForm(@PathVariable String token){
 

@@ -1,6 +1,6 @@
 package com.geekschool.config.security;
 
-import com.geekschool.constants.Role;
+import com.geekschool.entity.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +31,10 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .authorizeRequests()
-                .antMatchers(LOGIN_ENDPOINT, "/css/**", "/js/**", "/scss/**", "/img/**", "/fonts/**", "/forgotPassword", "/user/password/{token}", "/user/{token}").permitAll()
-                .antMatchers(ADMIN_ENDPOINT, "/api/lection/**", "/lection/**", "/api/groups/admin/**", "/groups", "/api/users/admin/**", "/users").hasAuthority(Role.ADMIN.getAuthority())
+                .antMatchers(LOGIN_ENDPOINT, "/css/**", "/js/**", "/scss/**", "/img/**", "/fonts/**",
+                        "/forgotPassword", "/user/password/{token}", "/user/{token}").permitAll()
+                .antMatchers(ADMIN_ENDPOINT, "/api/lection/**", "/lection/**", "/api/groups/admin/**",
+                        "/groups", "/api/users/admin/**", "/users").hasAuthority(Role.ADMIN.getAuthority())
                 .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
                 .anyRequest().authenticated()
                 .and()
@@ -56,9 +58,11 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+        auth.userDetailsService(authenticationUserDetailService)
+                .passwordEncoder(encoder());
     }
 
+    // TODO: 2019-07-05 get rid of this bean. use configure builder to bind user details service and encoder
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider

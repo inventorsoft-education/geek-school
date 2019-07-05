@@ -15,6 +15,7 @@ public class ForgotPasswordService {
     @Value("${invitation.default.host}")
     private String host;
 
+    // TODO: 2019-07-05 julia sama vse vypravyt
     public String createTokenLink(UUID uuid){
         return host+"user/"+uuid;
     }
@@ -23,6 +24,7 @@ public class ForgotPasswordService {
         return host+"user/password/"+uuid;
     }
 
+    // TODO: 2019-07-05 get rid of ModelAndView inside service layer
     public ModelAndView checkToken(InvitedToken invitedToken, String view){
         User user = invitedToken.getUser();
         ModelAndView mv = new ModelAndView();

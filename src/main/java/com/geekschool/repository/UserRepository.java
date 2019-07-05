@@ -1,7 +1,6 @@
 package com.geekschool.repository;
 
-import com.geekschool.constants.Role;
-import com.geekschool.constants.Status;
+import com.geekschool.entity.Status;
 import com.geekschool.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,11 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u where u.username = :name")
     Optional<User> findByUsername(@Param("name") String name);
-
-
-    @Modifying
-    @Query(value = "update User u set u.role = :role where u.id = :id")
-    void updateRoleById(@Param("id") long id, @Param("role") Role role);
 
     @Modifying
     @Query(value = "update User u set u.status = :status where u.id = :id")

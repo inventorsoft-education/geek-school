@@ -1,7 +1,7 @@
 package com.geekschool.config.security;
 
-import com.geekschool.constants.Role;
-import com.geekschool.constants.Status;
+import com.geekschool.entity.Role;
+import com.geekschool.entity.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +18,7 @@ public class AuthenticationUser implements UserDetails {
 
     private long id;
     private String username;
+    // TODO: 2019-07-05 remove frequently changable properties from this class (e.g. firstName, lastName, email)
     private String firstname;
     private String lastname;
     private String email;
@@ -42,20 +43,12 @@ public class AuthenticationUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        if (status.equals(Status.NOT_ACTIVE)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !status.equals(Status.NOT_ACTIVE);
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        if (status.equals(Status.DELETED)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !status.equals(Status.DELETED);
     }
 
     @Override

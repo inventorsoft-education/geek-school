@@ -34,13 +34,6 @@ public class LectionService {
     }
 
     @Transactional
-    public LectionDto findLectionByName(String name) {
-        return lectionRepository.findByName(name)
-                .map(lection -> lectionMapper.convertToLectionDto(lection))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    @Transactional
     public void updateLectionById(long id, User user) {
         lectionRepository.updateTeacherById(id, user);
     }
