@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Course</title>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
-    <link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
-    <script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
-    <script type="text/javascript" src="js/handlebars-v4.1.2.js"></script>
+<head th:include="layouts/layout :: headerFragment">
+    <title id="pageTitle">Group</title>
 </head>
 
 <body>
-<H1>Add student</H1>
-<div class="object" style="text-align: left">
-    <form action="" method="">
-            <input id="name_user" type="text" name="last_name" placeholder="Last Name"
-                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'User Name'">
+<div th:insert="layouts/layout :: header"></div>
 
-            <input type="text" name="groups" id="groups" list="input_group" placeholder="group">
-            <datalist id="input_group">
+<div class="row">
+    <div class="col-md-6">
+        <section class="button-area">
+            <div class="container border-top-generic" id="input_group">
 
-            </datalist>
-
-            <input type="submit" id="add_student" value="add">
-            <input type="submit" id="delete_student" value="delete">
-    </form>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-6">
+        <div class="section-top-border">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <h3 id="formTitle" class="mb-30">STUDENT USERNAME</h3>
+                    <input id="formType" name="formType" type="hidden" value="STUDENT">
+                    <div class="mt-10">
+                        <input type="text" id="name_user" rev="" name="username" placeholder="username"
+                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'username'" required
+                               class="single-input">
+                    </div>
+                    <button id="add_student" class="genric-btn success">ADD</button>
+                    <button id="delete_student" class="genric-btn success">DELETE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="group-handlebars" type="text/x-handlebars-template">
+        <div class="button-group-area">
+            <a href="#" id="group_id" name="{{id}}" class="genric-btn primary-border e-large">{{name}}</a>
+        </div>
+    </script>
 </div>
 
-    <script id="group-template" type="text/x-handlebars-template">
-        <option name="{{id}}" id="group_id">{{name}}</option>
-    </script>
-
 <script type="text/javascript" src="js/app/groups.js"></script>
+<div th:insert="layouts/layout :: footer">...</div>
+
 </body>
 </html>

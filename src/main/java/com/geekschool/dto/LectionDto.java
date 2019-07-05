@@ -13,6 +13,6 @@ public class LectionDto {
     private long id;
     private String name;
     private String description;
-    private User teacher;
+    private UserDto teacher;
     private Subject course;
 }
