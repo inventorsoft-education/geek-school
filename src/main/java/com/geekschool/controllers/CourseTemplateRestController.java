@@ -38,7 +38,6 @@ public class CourseTemplateRestController {
         }
 
         courseTemplate.setLections(lectionList);
-
         courseTemplateRepository.save(courseTemplate);
 
     }
