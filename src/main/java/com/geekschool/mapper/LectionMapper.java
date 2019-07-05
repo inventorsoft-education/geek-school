@@ -16,7 +16,7 @@ public class LectionMapper {
                 lection.getId(),
                 lection.getName(),
                 lection.getDescription(),
-                userMapper.convertToUserDto(lection.getTeacher()),
-                lection.getCourse());
+                userMapper.convertToUserDto(lection.getTeacher())
+        );
     }
 }

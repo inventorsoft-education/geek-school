@@ -51,7 +51,6 @@ public class LectionController {
         lection.setName(name);
         lection.setDescription(description);
         lection.setTeacher(teacher);
-        lection.setCourse(course);
 
         return lectionService.createLection(lection);
     }
