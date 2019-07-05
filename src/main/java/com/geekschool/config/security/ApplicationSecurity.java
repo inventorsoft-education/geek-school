@@ -32,7 +32,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT, "/css/**", "/js/**", "/scss/**", "/img/**", "/fonts/**").permitAll()
-                .antMatchers(ADMIN_ENDPOINT, "/api/lection/**", "/lection/**", "/api/groups/admin/**", "/api/users/admin/**", "/users", "/groups").hasAuthority(Role.ADMIN.getAuthority())
+                .antMatchers(ADMIN_ENDPOINT, "/api/lection/**", "/lection/**", "/api/groups/admin/**", "/groups", "/api/users/admin/**", "/users").hasAuthority(Role.ADMIN.getAuthority())
                 .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
                 .anyRequest().authenticated()
                 .and()

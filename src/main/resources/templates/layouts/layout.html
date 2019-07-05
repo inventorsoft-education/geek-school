@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon-->
     <link rel="shortcut icon" th:href="@{/img/fav.png}">
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <!-- Author Meta -->
     <meta name="author" content="codepixer">
     <!-- Meta Description -->
@@ -15,6 +18,13 @@
     <meta charset="UTF-8">
     <!-- Site Title -->
     <title th:include=":: #pageTitle">Layout Generic Title</title>
+
+    <script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+    <script th:src="@{/js/handlebars-v4.1.2.js}"></script>
+
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"
+          id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
     <!--
@@ -42,6 +52,8 @@
                     <ul class="nav-menu">
                         <li class="menu-active"><a th:href="@{/}">Home</a></li>
                         <li><a th:href="@{/elements}">Elements</a></li>
+                        <li><a th:href="@{/users}">Users</a></li>
+                        <li><a th:href="@{/users/current}">My profile</a></li>
                     </ul>
                 </nav><!-- #nav-menu-container -->
             </div>

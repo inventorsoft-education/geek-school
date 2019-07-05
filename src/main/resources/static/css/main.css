@@ -1085,28 +1085,40 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .progress-table .serial {
-  width: 11.83%;
-  padding-left: 30px;
+  width: 18.83%;
+  padding-left: 40px;
 }
 
 .progress-table .country {
-  width: 28.07%;
+padding-left: 120px;
+  width: 22.07%;
 }
 
 .progress-table .visit {
-  width: 19.74%;
+padding-left: 10px;
+  width: 0.74%;
+}
+
+.progress-table .role {
+padding-left: 180px;
+  width: 20.74%;
 }
 
 .progress-table .percentage {
-  width: 40.36%;
-  padding-right: 50px;
+  width: 18.36%;
+  padding-left: 180px;
+}
+
+.progress-table .remove {
+  width: 15.36%;
+  padding-right: 150px;
 }
 
 .progress-table .table-head {
   display: flex;
 }
 
-.progress-table .table-head .serial, .progress-table .table-head .country, .progress-table .table-head .visit, .progress-table .table-head .percentage {
+.progress-table .table-head .serial, .progress-table .table-head .country, .progress-table .table-head .visit, .progress-table .table-head .percentage, .progress-table .table-head .role, .progress-table .table-head .remove {
   color: #222222;
   line-height: 40px;
   text-transform: uppercase;
