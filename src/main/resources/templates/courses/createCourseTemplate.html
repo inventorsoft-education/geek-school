@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layouts/layout :: headerFragment">
+    <title id="pageTitle">Create Course Template</title>
+</head>
+<body>
+<div th:insert="layouts/layout :: header"></div>
+
+<div style="display: none" id="alertSuccess" class="single-widget search-widget" >
+    <div class="example generic-blockquote">
+        <button id="closeAlert" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        Course template successfully created! Close this window to continue!
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+        <div class="section-top-border">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <h3 id="formTitle" class="mb-30">CREATE COURSE TEMPLATE  </h3>
+                    <div id="createCourseTemplateForm" class="button-group-area">
+                        <input type="hidden" id="csrfToken" th:value="${_csrf.token}">
+                        <input type="hidden" id="csrfHeader" th:value="${_csrf.headerName}">
+
+                        <div class="mt-10">
+                            <input type="text" id="name" name="name" placeholder="Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required class="single-input">
+                        </div>
+
+                        <div class="mt-10">
+                            <input type="text" id="direction" name="direction" placeholder="Direction" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Direction'" required class="single-input">
+                        </div>
+                        <div class="mt-10">
+                            <div class="form-group shadow-textarea droppable" id="droppable">
+                                <h5 class="label label-info">DRAG & DROP LECTURES BELOW:</h5>
+                            </div>
+                        </div>
+                        <button id="createCourseTemplateButton" class="genric-btn success">CREATE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 section-top-border">
+            <h3 class="mb-20">Lectures:</h3>
+        <ul class="unordered-list">
+            <tr th:each="lection: ${lections}">
+                <li class="genric-btn primary-border draggable"><td th:text="${lection.name}" /></li>
+            </tr>
+        </ul>
+    </div>
+</div>
+
+
+<div th:insert="layouts/layout :: footer"></div>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(function() {
+
+        $('.draggable').draggable({
+            containment: ".droppable",
+            revert: true,
+            revertDuration: 0});
+
+        $( ".droppable" ).droppable({
+            accept: ".draggable",
+            drop:function( event, ui )
+            {
+                $(this).append(ui.draggable);
+                $(ui.draggable).addClass('added-lecture');
+            }
+        });
+    });
+    $("#createCourseTemplateButton").on('click', function () {
+        nameTemplate = $("#name").val()
+        directionTemplate = $("#direction").val()
+        lections = $(".added-lecture").map(function() {
+            return this.innerHTML;
+        }).get()
+
+        var token = $('#csrfToken').val();
+        var header = $('#csrfHeader').val();
+
+        json = {"name" : nameTemplate, "direction" : directionTemplate, "lections" : lections};
+
+        $.ajax({
+            type: "post",
+            url: "/saveCourseTemplate",
+            data: JSON.stringify(json),
+            async : true,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            },
+            success: function(){
+                document.getElementById("alertSuccess").style.display = 'block';
+            }
+        })
+
+        $('#closeAlert').on('click', function () {
+            document.location.reload();
+        })
+
+    })
+
+
+</script>
+</body>
+</html>
