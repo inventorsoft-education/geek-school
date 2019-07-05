@@ -1,21 +1,17 @@
 package com.geekschool.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.geekschool.constants.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "subject")
+@Table(name = "lection")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Subject {
-
+public class Lection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -24,11 +20,13 @@ public class Subject {
 
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private User teacher;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "course")
-    private List<Lection> lections;
-
+    @ManyToOne
+    @JoinTable(name = "subject_lections",
+            joinColumns = {@JoinColumn(name = "subject_id")},
+            inverseJoinColumns = {@JoinColumn (name = "lection_id")})
+    private Subject course;
 }

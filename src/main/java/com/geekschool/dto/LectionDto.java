@@ -1,25 +1,18 @@
 package com.geekschool.dto;
 
-import com.geekschool.constants.Status;
-import com.geekschool.entity.Lection;
+import com.geekschool.entity.Subject;
+import com.geekschool.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class SubjectDto {
-
+@AllArgsConstructor
+public class LectionDto {
     private long id;
-
     private String name;
-
     private String description;
-
-    private Status status;
-
-    private List<Lection> lections;
+    private User teacher;
+    private Subject course;
 }

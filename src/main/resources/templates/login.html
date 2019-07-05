@@ -4,10 +4,12 @@
     <title id="pageTitle">Login</title>
 
 </head>
+
 <body>
 <div class="row">
     <form class="col mx-auto" th:action="@{/login}" th:method="post">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="hidden" th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}"/>
         <div class="mt-10">
             <input type="text" id="user_id" name="username" placeholder="Username" onfocus="this.placeholder = ''"
                    onblur="this.placeholder = 'Username'" required class="single-input">

@@ -26,7 +26,12 @@ public class SubjectService {
 
     @Transactional
     public Subject findById(long id) {
-        return subjectRepository.getOne(id);
+        return subjectRepository.findById(id).get();
+    }
+
+    @Transactional
+    public Subject findByName(String name) {
+        return subjectRepository.findByName(name);
     }
 
     @Transactional

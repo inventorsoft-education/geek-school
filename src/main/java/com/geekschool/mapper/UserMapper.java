@@ -17,7 +17,8 @@ public class UserMapper {
                 user.getLastname(),
                 user.getEmail(),
                 user.getStatus(),
-                user.getRole());
+                user.getRole(),
+                user.getGroups());
     }
 
     public AuthenticationLoginDto convertToAuthenticationLoginDto(User user) {
