@@ -46,7 +46,7 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping("admin/add")
+    @PutMapping("admin")
     @ResponseStatus(HttpStatus.OK)
     public void addUserToGroup(@RequestParam("group_id") long idGroup,
                                @RequestParam("username") String username) {

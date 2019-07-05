@@ -73,9 +73,6 @@ $(document).ready(function() {
             },
             success: function() {
                 loadLection();
-            },
-            error: function(e) {
-                alert('asd');
             }
         })
     };
