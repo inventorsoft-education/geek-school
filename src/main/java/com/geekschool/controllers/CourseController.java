@@ -13,8 +13,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-// TODO: 2019-07-05 fix url in js =)
-@RequestMapping("api/courses")
+@RequestMapping("${api}/courses")
 public class CourseController {
 
     private CourseService courseService;

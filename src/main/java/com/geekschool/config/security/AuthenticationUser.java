@@ -2,26 +2,23 @@ package com.geekschool.config.security;
 
 import com.geekschool.entity.Role;
 import com.geekschool.entity.Status;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
 
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = {"id", "username"})
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationUser implements UserDetails {
 
     private long id;
     private String username;
-    // TODO: 2019-07-05 remove frequently changable properties from this class (e.g. firstName, lastName, email)
-    private String firstname;
-    private String lastname;
-    private String email;
     private String password;
     private Status status;
     private Role role;

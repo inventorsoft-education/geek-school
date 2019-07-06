@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,6 +19,4 @@ public interface LectionRepository extends JpaRepository<Lection, Long> {
     @Modifying
     @Query(value = "update Lection l set l.teacher = :teacher where l.id = :id")
     void updateTeacherById(@Param("id") long id, @Param("teacher") User teacher);
-
-    List<Lection> findByNameIn(List<String> lections);
 }

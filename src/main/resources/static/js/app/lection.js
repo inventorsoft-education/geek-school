@@ -2,7 +2,7 @@ $(document).ready(function() {
     function loadLection() {
         $.ajax({
             type: 'GET',
-            url: 'api/lection',
+            url: 'api/lections',
             dataType: 'json',
             cache: false,
             traditional: true,
@@ -44,7 +44,7 @@ $(document).ready(function() {
     function loadCourse() {
         $.ajax({
             type: 'GET',
-            url: 'api/subject',
+            url: 'api/courses',
             dataType: 'json',
             cache: false,
             traditional: true,
@@ -64,7 +64,7 @@ $(document).ready(function() {
         var headerName = $("meta[name='_csrf_header']").attr("content");
         $.ajax({
             type: 'PUT',
-            url: '/api/lection/' + id_lection,
+            url: '/api/lections/' + id_lection,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(headerName, token);
             },
@@ -82,7 +82,7 @@ $(document).ready(function() {
         var headerName = $("meta[name='_csrf_header']").attr("content");
         $.ajax({
             type: 'DELETE',
-            url: "/api/lection/" + id,
+            url: "/api/lections/" + id,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(headerName, token);
             },
@@ -138,7 +138,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "POST",
-                url: "api/lection",
+                url: "api/lections",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(headerName, token);
                 },

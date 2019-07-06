@@ -5,7 +5,7 @@ $(document).ready(function() {
     function loadUsers() {
         $.ajax({
             type: 'GET',
-            url: 'api/users/admin',
+            url: 'api/users',
             dataType: 'json',
             cache: false,
             traditional: true,
@@ -92,20 +92,5 @@ $(document).ready(function() {
 
         updateUser(idRow, status);
 
-    });
-
-    $.ajax({
-        type: 'GET',
-        url: 'api/users/admin/status',
-        dataType: 'json',
-        cache: false,
-        traditional: true,
-        success: function(response) {
-            var source = document.getElementById("status-template").innerHTML;
-            var template = Handlebars.compile(source);
-            for (let i = 0; i < response.length; i++) {
-                $('#status_list').append(template(response[i]));
-            }
-        }
     });
 });

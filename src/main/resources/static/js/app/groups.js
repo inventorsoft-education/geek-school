@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $.ajax({
         type: 'GET',
-        url: 'api/groups/admin',
+        url: 'api/groups',
         dataType: 'json',
         cache: false,
         traditional: true,
@@ -22,7 +22,7 @@ $(document).ready(function() {
         var group_id = $('#group_id').attr("rev");
         $.ajax({
             type: 'DELETE',
-            url: 'api/groups/admin/' + group_id,
+            url: 'api/groups/' + group_id,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(headerName, token);
             },
@@ -37,12 +37,11 @@ $(document).ready(function() {
         var group_id = $('#tagPlaces').attr("value");
         $.ajax({
             type: 'PUT',
-            url: 'api/groups/admin',
+            url: 'api/groups/' + group_id + '/users',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(headerName, token);
             },
             data: {
-                'group_id': group_id,
                 'username': user_name
             },
             success: function() {}
