@@ -35,8 +35,8 @@
                             <input type="text" id="direction" name="direction" placeholder="Direction" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Direction'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <div class="form-group shadow-textarea droppable" id="droppable">
-                                <h5 class="label label-info">DRAG & DROP LECTURES BELOW:</h5>
+                            <h5 class="label label-info">DRAG & DROP LECTURES BELOW:</h5>
+                            <div class="form-group shadow-textarea droppable ui-widget-content border border-primary w-100 p-3" id="droppable">
                             </div>
                         </div>
                         <button id="createCourseTemplateButton" class="genric-btn success">CREATE</button>
@@ -47,11 +47,9 @@
     </div>
     <div class="col-md-4 section-top-border">
             <h3 class="mb-20">Lectures:</h3>
-        <ul class="unordered-list">
-            <tr th:each="lection: ${lections}">
-                <li class="genric-btn primary-border draggable"><td th:text="${lection.name}" /></li>
-            </tr>
+        <ul class="unordered-list button-group-area" id="lections">
         </ul>
+        </div>
     </div>
 </div>
 
@@ -60,12 +58,30 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-    $(function() {
+    $(document).ready(function(){
+
+        $.ajax({
+            type: "get",
+            url: "/courses-templates",
+
+            success: function(lections){
+
+                html = ""
+                lections.forEach(function (element) {
+                   html += "<li class='genric-btn primary-border draggable ui-widget-content'>"+element.name+"</li>"
+                })
+
+                addDragandDrop();
+            }
+        })
+    })
+
+    function addDragandDrop(){
+        $("#lections").append(html)
 
         $('.draggable').draggable({
             containment: ".droppable",
-            revert: true,
-            revertDuration: 0});
+            revert: true });
 
         $( ".droppable" ).droppable({
             accept: ".draggable",
@@ -75,7 +91,9 @@
                 $(ui.draggable).addClass('added-lecture');
             }
         });
-    });
+
+    }
+
     $("#createCourseTemplateButton").on('click', function () {
         nameTemplate = $("#name").val()
         directionTemplate = $("#direction").val()
@@ -90,7 +108,7 @@
 
         $.ajax({
             type: "post",
-            url: "/saveCourseTemplate",
+            url: "/course-templates",
             data: JSON.stringify(json),
             async : true,
             beforeSend: function(xhr) {
@@ -103,7 +121,13 @@
         })
 
         $('#closeAlert').on('click', function () {
-            document.location.reload();
+            $("#name").val("")
+            $("#direction").val("")
+            $("#droppable").empty()
+
+            addDragandDrop();
+
+           document.getElementById("alertSuccess").style.display = 'none';
         })
 
     })
