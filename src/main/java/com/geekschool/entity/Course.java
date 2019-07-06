@@ -34,9 +34,8 @@ public class Course {
     private Status status;
 
     // TODO: 2019-07-05 please change it to @ManyToMany
-    @JsonIgnore
     @ToString.Exclude
-    @OneToMany(mappedBy = "course")
+    @ManyToMany
     private List<Lection> lections;
 
 }
