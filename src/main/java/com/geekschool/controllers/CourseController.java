@@ -1,6 +1,7 @@
 package com.geekschool.controllers;
 
-import com.geekschool.dto.SubjectDto;
+import com.geekschool.dto.CourseDto;
+import com.geekschool.mapper.CourseMapper;
 import com.geekschool.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -17,10 +19,13 @@ import java.util.List;
 public class CourseController {
 
     private CourseService courseService;
+    private CourseMapper courseMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<SubjectDto> getSubjects() {
-        return courseService.getSubjects();
+    public List<CourseDto> getSubjects() {
+        return courseService.getCourses()
+        .stream().map(course -> courseMapper.convertToSubjectDto(course))
+                .collect(Collectors.toList());
     }
 }

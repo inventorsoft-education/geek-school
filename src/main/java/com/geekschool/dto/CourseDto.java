@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectDto {
+public class CourseDto {
 
     private long id;
 
