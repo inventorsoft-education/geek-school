@@ -2,18 +2,17 @@ package com.geekschool.mapper;
 
 import com.geekschool.dto.LectionDto;
 import com.geekschool.entity.Lection;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class LectionMapper {
 
-    @Autowired
     private UserMapper userMapper;
-
-    @Autowired
     private List<LectionDto> lectionDtos;
 
     public LectionDto convertToLectionDto(Lection lection) {

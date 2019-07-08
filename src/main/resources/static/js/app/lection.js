@@ -127,17 +127,18 @@ $(document).ready(function() {
 
     $("#add_lection_btn").on('click', function() {
         loadCourse();
+        $('.modal').modal('show');
         document.getElementById("add_lection_btn").style.visibility="hidden";
         var elementById = "lection_teacher";
         var putId = '#input_teacher';
         loadTeacher(elementById, putId);
 
         $('#btn_cancel').on('click', function() {
-            $('#new_lection').hide();
+         //   $('#new_lection').hide();
             document.getElementById("add_lection_btn").style.visibility="visible";
         })
 
-        $('#new_lection').show();
+        // $('#new_lection').show();
         $('#btn_ok').on('click', function(e) {
             e.preventDefault();
             var token = $("meta[name='_csrf']").attr("content");

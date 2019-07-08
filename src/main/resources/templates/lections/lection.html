@@ -8,6 +8,9 @@
 <div th:insert="layouts/layout :: header"></div>
 
 
+
+
+
 <section id="team" class="pb-5">
     <div class="container">
 
@@ -15,7 +18,18 @@
         <div class="row" id="lection_list">
         </div>
 
-        <div class="modal-content" id="new_lection" style="display:none">
+
+        <button type="button" data-toggle="modal" data-target="#myModal" id="add_lection_btn" class="btn btn-secondary">
+            Create lection
+        </button>
+
+    </div>
+
+</section>
+
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Create lection</h4>
             </div>
@@ -23,57 +37,45 @@
                 <div class="modal-body">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input id="input_name" type="text" placeholder="name">
-                            <label>Name</label>
+                            <div class="mt-10">
+                                <input type="text" name="name" id="input_name" placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'" required class="single-input">
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input id="input_description" type="text" placeholder="description">
-                            <label>Description</label>
+                            <div class="mt-10">
+                                <input type="text" name="description" id="input_description" placeholder="description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'description'" required class="single-input">
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="text" name="teachers" id="teacher" list="input_teacher"
-                                   placeholder="teacher">
+                            <div class="mt-10">
+                                <input type="text" name="teachers" list="input_teacher" id="teacher" placeholder="teacher" onfocus="this.placeholder = ''" onblur="this.placeholder = 'teacher'" required class="single-input">
+                            </div>
                             <datalist id="input_teacher">
 
                             </datalist>
-                            <label>Teacher</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="text" name="subjects" id="subjects" list="input_subject"
-                                   placeholder="course">
-                            <datalist id="input_subject">
-
-                            </datalist>
-                            <label>Course</label>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal-footer">
-                <input type="hidden" name="isEmpty" value="">
-                <button type="input" name="submit" id="btn_ok" value="newAccount" class="btn btn-success btn-icon">
-                    <i class="fa fa-check"></i> Create lection
-                </button>
-                <button type="button" class="btn btn-default btn-icon" id="btn_cancel" data-dismiss="modal"><i
-                        class="fa fa-times-circle"></i> Cancel
-                </button>
+                <div class="modal-footer">
+                    <input type="hidden" name="isEmpty" value="">
+                    <button type="input" name="submit" id="btn_ok" value="newAccount"
+                            class="genric-btn primary">
+                        <i class="fa fa-check"></i> Create
+                    </button>
+                    <button type="button" class="genric-btn primary" id="btn_cancel" data-dismiss="modal">
+                        <i class="fa fa-times-circle"></i> Cancel
+                    </button>
+                </div>
             </div>
         </div>
-
-
-        <button type="button" id="add_lection_btn" class="btn btn-secondary">Create lection</button>
-
     </div>
-
-</section>
+</div>
 
 <script id="entry" type="text/x-handlebars-template">
     <div class="col-xs-12 col-sm-6 col-md-4">
@@ -97,7 +99,7 @@
                                 </h4>
                                 <h4 class="card-title">Teacher:
                                     <i style="color:#007b5e">{{teacher.username}} </i>
-                                    <button type="button" rel="{{id}}" class="btn btn-default btn-sm"
+                                    <button type="button" rel="{{id}}" class="fa fa-pencil"
                                             id="btn_change_teacher">
                                         <span class="glyphicon glyphicon-wrench"></span>
                                     </button>
