@@ -30,7 +30,7 @@ public class Group {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "course_id")
     private Course course;
 
 

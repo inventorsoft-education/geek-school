@@ -94,6 +94,14 @@ $(document).ready(function() {
 
     loadLection();
 
+    var isReady = true;
+    $('#lection_list').on('click', '#eventer', function()
+    {
+        if (isReady) {
+            $(this).toggleClass('image-fliper');
+        }
+    });
+
     $('#lection_list').on('click', '#btn_delete_lection', function() {
         var id_delete_lection = $(this).attr("rel");
         deleteLection(id_delete_lection);
@@ -104,11 +112,14 @@ $(document).ready(function() {
         var input_teacher_id = '#tech' + id_lection;
         if ($(input_teacher_id).is(":visible")) {
             $(input_teacher_id).hide();
+            isReady = true;
         } else {
             $(input_teacher_id).show();
+            isReady = false;
         }
 
         $('#lection_list').on('click', '#btn_change_teacher_ok', function() {
+            isReady = true;
             var teacher_id = $(input_teacher_id).val();
             updateTeacher(id_lection, teacher_id);
         });
