@@ -35,8 +35,8 @@
                             <input type="text" id="direction" name="direction" placeholder="Direction" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Direction'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <h5 class="label label-info">DRAG & DROP LECTURES BELOW:</h5>
-                            <div class="form-group shadow-textarea droppable ui-widget-content border border-primary w-100 p-3" id="droppable">
+                            <div class="form-group shadow-textarea droppable ui-widget-content" id="droppable">
+
                             </div>
                         </div>
                         <button id="createCourseTemplateButton" class="genric-btn success">CREATE</button>
@@ -81,7 +81,8 @@
 
         $('.draggable').draggable({
             containment: ".droppable",
-            revert: true });
+            revert: true,
+            revertDuration: 0});
 
         $( ".droppable" ).droppable({
             accept: ".draggable",

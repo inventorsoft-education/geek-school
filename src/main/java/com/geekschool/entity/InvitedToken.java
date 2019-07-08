@@ -20,6 +20,7 @@ public class InvitedToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String token;
 
     @Column(name = "date_off")

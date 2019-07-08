@@ -48,4 +48,21 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+    public void saveUser(User user){
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setStatus(Status.ACTIVE);
+        userRepository.save(user);
+    }
+
+    public void updateUserByPassword(String password, Long id){
+
+        User user = userRepository.findById(id).orElseThrow();
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        userRepository.save(user);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow();
+    }
 }

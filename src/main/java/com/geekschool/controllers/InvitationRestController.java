@@ -17,22 +17,11 @@ import java.util.UUID;
 @RestController
 public class InvitationRestController {
 
-    private UserService userService;
-    private MailSenderService mailSenderService;
-    private ForgotPasswordService forgotPasswordService;
     private InvitationService invitationService;
 
-    // TODO: 2019-07-05 move transactional into service layer. move logic into service layer
-    @Transactional
-    @PostMapping(value = "/invitation")
+    @GetMapping(value = "/invitation")
     public void sendInvitation(@RequestParam Role formType, String email){
-
-        UUID uuid = UUID.randomUUID();
-        String link = forgotPasswordService.createTokenLink(uuid);
-        User user = userService.createUserByToken(formType, email);
-        invitationService.createInvitedToken(uuid, user);
-        mailSenderService.sendMessage(email, link);
-
+        invitationService.sendInvitation(formType,email);
     }
 
 }
