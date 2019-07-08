@@ -6,7 +6,7 @@
 }
 
 .btn-primary:hover,
-.btn-primary {
+.btn-primary:focus {
     background-color: #108d6f;
     border-color: #108d6f;
     box-shadow: none;
@@ -35,8 +35,8 @@ section .section-title {
     background: #ffffff;
 }
 
-.image-flip:hover .backside,
-.image-flip.hover .backside {
+.image-fliper .backside,
+.image-fliper .backside {
     -webkit-transform: rotateY(0deg);
     -moz-transform: rotateY(0deg);
     -o-transform: rotateY(0deg);
@@ -45,8 +45,8 @@ section .section-title {
     border-radius: .25rem;
 }
 
-.image-flip:hover .frontside,
-.image-flip.hover .frontside {
+.image-fliper .frontside,
+.image-fliper .frontside {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
     -o-transform: rotateY(180deg);
@@ -79,7 +79,7 @@ section .section-title {
     top: 0;
     left: 0;
     background: white;
-    -webkit-transform: rotateY(- 180deg);
+    -webkit-transform: rotateY(-180deg);
     -moz-transform: rotateY(-180deg);
     -o-transform: rotateY(-180deg);
     -ms-transform: rotateY(-180deg);
