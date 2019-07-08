@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
-
-@AllArgsConstructor
 @Controller
-public class InvitationController {
+@AllArgsConstructor
+public class ForgotPasswordController {
 
     private InvitedTokenRepository invitedTokenRepository;
     private ForgotPasswordService forgotPasswordService;
 
-    @GetMapping(value = "/user/{token}")
-    public ModelAndView getUserForm(@PathVariable String token) {
+    @GetMapping(value = "/user/password/{token}")
+    public ModelAndView getForgotPasswordForm(@PathVariable String token){
+
         InvitedToken invitedToken = invitedTokenRepository.findByToken(token);
         ModelAndView mv = new ModelAndView();
         if(forgotPasswordService.checkToken(invitedToken)){
             User user = invitedToken.getUser();
-            mv.addObject("user", user);
+            mv.setViewName("passwords/forgotPassword");
             mv.addObject("invitedToken", invitedToken);
-            mv.setViewName("invitations/form");
+            mv.addObject("user", user);
             mv.getModel();
             return mv;
         }
@@ -36,5 +36,4 @@ public class InvitationController {
             return mv;
         }
     }
-
 }

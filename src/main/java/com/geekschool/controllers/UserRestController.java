@@ -57,5 +57,15 @@ public class UserRestController {
         userService.updateStatusById(id, status);
     }
 
+    @PostMapping(value = "/users/user")
+    private void saveUser(@RequestBody User user){
+        userService.saveUser(user);
+    }
+
+
+    @PostMapping(value = "/users/password")
+    public void updateUserByPassword(@RequestParam String password, Long id){
+        userService.updateUserByPassword(password, id);
+    }
 
 }
