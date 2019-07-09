@@ -18,8 +18,6 @@ public class UserMapper {
         return new UserDto(
                 user.getId(),
                 user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
                 user.getEmail(),
                 user.getStatus(),
                 user.getRole(),
@@ -31,14 +29,14 @@ public class UserMapper {
 
     public AuthenticationLoginDto convertToAuthenticationLoginDto(User user) {
         return new AuthenticationLoginDto(
-                user.getUsername(),
+                user.getEmail(),
                 user.getPassword());
     }
 
     public AuthenticationUser convertToAuthenticationUser(User user) {
         return new AuthenticationUser(
                 user.getId(),
-                user.getUsername(),
+                user.getEmail(),
                 user.getPassword(),
                 user.getStatus(),
                 user.getRole());

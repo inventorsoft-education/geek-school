@@ -18,7 +18,7 @@ import java.util.Collections;
 public class AuthenticationUser implements UserDetails {
 
     private long id;
-    private String username;
+    private String email;
     private String password;
     private Status status;
     private Role role;
@@ -35,7 +35,7 @@ public class AuthenticationUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

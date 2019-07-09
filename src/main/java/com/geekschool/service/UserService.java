@@ -32,6 +32,12 @@ public class UserService {
     }
 
     @Transactional
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @Transactional
     public List<User> findTeacherByRole(Role role) {
         return userRepository.findByRole(role);
     }

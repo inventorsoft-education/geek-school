@@ -28,7 +28,7 @@ public class UserRestController {
     @GetMapping("current")
     @ResponseStatus(HttpStatus.OK)
     public UserDto getCurrentUser(@AuthenticationPrincipal AuthenticationUser currentUser) {
-        User user = userService.findByUsername(currentUser.getUsername());
+        User user = userService.findByEmail(currentUser.getEmail());
         return userMapper.convertToUserDto(user);
     }
 

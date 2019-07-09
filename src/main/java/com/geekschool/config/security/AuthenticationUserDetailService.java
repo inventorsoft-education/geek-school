@@ -16,9 +16,9 @@ public class AuthenticationUserDetailService implements UserDetailsService {
     private UserMapper userMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        return userRepository.findByUsername(name)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
                 .map(u -> userMapper.convertToAuthenticationUser(u))
-                .orElseThrow(() -> new UsernameNotFoundException("User with usernamae " + name + " not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
     }
 }
