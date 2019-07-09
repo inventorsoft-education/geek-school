@@ -1,4 +1,4 @@
-package com.geekschool.constants;
+package com.geekschool.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,6 +1,6 @@
 package com.geekschool.dto;
 
-import com.geekschool.constants.Status;
+import com.geekschool.entity.Status;
 import com.geekschool.entity.Lection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectDto {
+public class CourseDto {
 
     private long id;
 

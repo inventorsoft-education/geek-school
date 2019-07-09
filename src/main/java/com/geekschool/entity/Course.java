@@ -1,6 +1,8 @@
 package com.geekschool.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,17 +10,17 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode(of = {"id", "name"})
 @Entity
-@Table(name = "groups", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(name = "course", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @AllArgsConstructor
 @NoArgsConstructor
-public class Group {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,16 +30,14 @@ public class Group {
 
     private String description;
 
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
-    private Course course;
-
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ToString.Exclude
     @ManyToMany
-    @JoinTable(name = "user_group",
-            joinColumns = {@JoinColumn(name = "group_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private Set<User> students;
+    @JoinTable(name = "course_lection",
+            joinColumns = {@JoinColumn(name = "course_id")},
+            inverseJoinColumns = {@JoinColumn(name = "lection_id")})
+    private List<Lection> lections;
+
 }

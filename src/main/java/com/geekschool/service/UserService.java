@@ -1,10 +1,8 @@
 package com.geekschool.service;
 
-import com.geekschool.constants.Role;
-import com.geekschool.constants.Status;
-import com.geekschool.dto.UserDto;
+import com.geekschool.entity.Role;
+import com.geekschool.entity.Status;
 import com.geekschool.entity.User;
-import com.geekschool.mapper.UserMapper;
 import com.geekschool.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -22,47 +19,27 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
-    private UserMapper userMapper;
 
     @Transactional
-    public UserDto save(User user) {
-
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setStatus(Status.ACTIVE);
-
-        user.setRole(Role.STUDENT);
-
-        userRepository.save(user);
-
-        return userMapper.convertToUserDto(user);
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 
     @Transactional
-    public List<UserDto> getAllUser() {
-        List<UserDto> userList = userRepository.findAll()
-                .stream()
-                .map(user -> userMapper.convertToUserDto(user))
-                .collect(Collectors.toList());
-        return userList;
-    }
-
-    @Transactional
-    public UserDto findByUsername(String name) {
+    public User findByUsername(String name) {
         return userRepository.findByUsername(name)
-                .map(user -> userMapper.convertToUserDto(user))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Transactional
-    public UserDto findById(Long id) {
-        return userRepository.findById(id)
-                .map(user -> userMapper.convertToUserDto(user))
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Transactional
-    public void updateRoleById(long id, Role role) {
-        userRepository.updateRoleById(id, role);
+    public List<User> findTeacherByRole(Role role) {
+        return userRepository.findByRole(role);
     }
 
     @Transactional
@@ -70,22 +47,28 @@ public class UserService {
         userRepository.updateStatusById(id, status);
     }
 
-    @Transactional
-    public void delete(Long id) {
-        userRepository.deleteById(id);
-    }
-
-    public User createUserByToken(String formType, String email){
+    public User createUserByToken(Role formType, String email) {
         User user = new User();
         user.setEmail(email);
-        if(Role.STUDENT.toString().equals(formType)){
-            user.setRole(Role.STUDENT);
-        }
-        else {
-            user.setRole(Role.TEACHER);
-        }
-
+        user.setRole(formType);
         userRepository.save(user);
         return user;
+    }
+    public void saveUser(User user){
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setStatus(Status.ACTIVE);
+        userRepository.save(user);
+    }
+
+    public void updateUserByPassword(String password, Long id){
+
+        User user = userRepository.findById(id).get();
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        userRepository.save(user);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).get();
     }
 }

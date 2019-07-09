@@ -1,26 +1,31 @@
 package com.geekschool.entity;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = {"id", "name"})
 @Entity
-@Table(name = "courses_templates")
+@Table(name = "courses_templates", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class CourseTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(unique = true)
     private String name;
 
-    @Column(name = "direction")
     private String direction;
 
+    @ToString.Exclude
     @ManyToMany
-    @Column(name = "lections")
     private List<Lection> lections;
 
 }

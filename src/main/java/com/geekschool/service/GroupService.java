@@ -1,11 +1,9 @@
 package com.geekschool.service;
 
-import com.geekschool.dto.GroupDto;
 import com.geekschool.entity.Group;
 import com.geekschool.entity.User;
-import com.geekschool.mapper.GroupMapper;
-import com.geekschool.mapper.UserMapper;
 import com.geekschool.repository.GroupRepository;
+import com.geekschool.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,24 +18,17 @@ import java.util.Set;
 public class GroupService {
 
     private GroupRepository groupRepository;
-    private GroupMapper groupMapper;
-    private UserMapper userMapper;
+    private UserRepository userRepository;
 
     @Transactional
-    public void saveGroup(Group group) {
+    public void save(Group group) {
         groupRepository.save(group);
     }
 
     @Transactional
-    public GroupDto getGroupById(long id) {
-       return groupRepository.findById(id)
-               .map(group -> groupMapper.convertToGroupDto(group))
-               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    @Transactional
-    public Group findByName(String name) {
-        return groupRepository.findByName(name);
+    public Group getGroupById(long id) {
+        return groupRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Transactional
@@ -46,17 +37,27 @@ public class GroupService {
     }
 
     @Transactional
-    public void deleteGroupById(long id) {
-        groupRepository.deleteById(id);
+    public void addUserToGroup(Long id, String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Group group = getGroupById(id);
+        group.getStudents().add(user);
+        save(group);
     }
 
     @Transactional
-    public void deleteUserFromGroup(long id, User user) {
-        GroupDto groupDto = getGroupById(id);
-        Set<User> students = groupDto.getStudents();
-        students.remove(user);
-        groupDto.setStudents(students);
-        saveGroup(groupMapper.convertToGroup(groupDto));
+    public Set<User> loadUsersByGroup(Long id) {
+        return getGroupById(id).getStudents();
     }
 
+    @Transactional
+    public void deleteUserFromGroup(Long id, String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Group group = getGroupById(id);
+        Set<User> students = group.getStudents();
+        students.remove(user);
+        group.setStudents(students);
+        save(group);
+    }
 }

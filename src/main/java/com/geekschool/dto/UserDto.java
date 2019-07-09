@@ -1,8 +1,7 @@
 package com.geekschool.dto;
 
-import com.geekschool.constants.Role;
-import com.geekschool.constants.Status;
-import com.geekschool.entity.Group;
+import com.geekschool.entity.Role;
+import com.geekschool.entity.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,10 +13,8 @@ public class UserDto {
 
     private long id;
     private String username;
-    private String firstname;
-    private String lastname;
     private String email;
     private Status status;
     private Role role;
-    private List<Group> groups;
+    private List<GroupDto> groups;
 }

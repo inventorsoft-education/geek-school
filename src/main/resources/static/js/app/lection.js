@@ -2,7 +2,7 @@ $(document).ready(function() {
     function loadLection() {
         $.ajax({
             type: 'GET',
-            url: 'api/lection',
+            url: 'api/lections',
             dataType: 'json',
             cache: false,
             traditional: true,
@@ -44,7 +44,7 @@ $(document).ready(function() {
     function loadCourse() {
         $.ajax({
             type: 'GET',
-            url: 'api/subjects',
+            url: 'api/courses',
             dataType: 'json',
             cache: false,
             traditional: true,
@@ -64,7 +64,7 @@ $(document).ready(function() {
         var headerName = $("meta[name='_csrf_header']").attr("content");
         $.ajax({
             type: 'PUT',
-            url: '/api/lection/' + id_lection,
+            url: '/api/lections/' + id_lection,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(headerName, token);
             },
@@ -82,7 +82,7 @@ $(document).ready(function() {
         var headerName = $("meta[name='_csrf_header']").attr("content");
         $.ajax({
             type: 'DELETE',
-            url: "/api/lection/" + id,
+            url: "/api/lections/" + id,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(headerName, token);
             },
@@ -94,6 +94,14 @@ $(document).ready(function() {
 
     loadLection();
 
+    var isReady = true;
+    $('#lection_list').on('click', '#eventer', function()
+    {
+        if (isReady) {
+            $(this).toggleClass('image-fliper');
+        }
+    });
+
     $('#lection_list').on('click', '#btn_delete_lection', function() {
         var id_delete_lection = $(this).attr("rel");
         deleteLection(id_delete_lection);
@@ -104,11 +112,14 @@ $(document).ready(function() {
         var input_teacher_id = '#tech' + id_lection;
         if ($(input_teacher_id).is(":visible")) {
             $(input_teacher_id).hide();
+            isReady = true;
         } else {
             $(input_teacher_id).show();
+            isReady = false;
         }
 
         $('#lection_list').on('click', '#btn_change_teacher_ok', function() {
+            isReady = true;
             var teacher_id = $(input_teacher_id).val();
             updateTeacher(id_lection, teacher_id);
         });
@@ -116,17 +127,18 @@ $(document).ready(function() {
 
     $("#add_lection_btn").on('click', function() {
         loadCourse();
+        $('.modal').modal('show');
         document.getElementById("add_lection_btn").style.visibility="hidden";
         var elementById = "lection_teacher";
         var putId = '#input_teacher';
         loadTeacher(elementById, putId);
 
         $('#btn_cancel').on('click', function() {
-            $('#new_lection').hide();
+         //   $('#new_lection').hide();
             document.getElementById("add_lection_btn").style.visibility="visible";
         })
 
-        $('#new_lection').show();
+        // $('#new_lection').show();
         $('#btn_ok').on('click', function(e) {
             e.preventDefault();
             var token = $("meta[name='_csrf']").attr("content");
@@ -134,11 +146,11 @@ $(document).ready(function() {
             var name = $('#input_name').val();
             var description = $('#input_description').val();
             var teacher_name = $('#teacher').val();
-            var subject_name = $('#subjects').val();
+            var subject_name = $('#subject').val();
 
             $.ajax({
                 type: "POST",
-                url: "api/lection",
+                url: "api/lections",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader(headerName, token);
                 },

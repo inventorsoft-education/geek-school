@@ -1,16 +1,27 @@
 package com.geekschool.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.geekschool.constants.Role;
-import com.geekschool.constants.Status;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = {"id", "username"})
 @Entity
 @Table(name = "users")
 @AllArgsConstructor
@@ -19,32 +30,20 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(name = "username")
     private String username;
 
-    @Column(name = "first_name")
-    private String firstname;
-
-    @Column(name = "last_name")
-    private String lastname;
-
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "students")
     private List<Group> groups;
 }

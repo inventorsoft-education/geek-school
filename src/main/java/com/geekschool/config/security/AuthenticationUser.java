@@ -1,25 +1,23 @@
 package com.geekschool.config.security;
 
-import com.geekschool.constants.Role;
-import com.geekschool.constants.Status;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.geekschool.entity.Role;
+import com.geekschool.entity.Status;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
 
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = {"id", "username"})
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationUser implements UserDetails {
 
     private long id;
-    private String username;
-    private String firstname;
-    private String lastname;
     private String email;
     private String password;
     private Status status;
@@ -37,25 +35,17 @@ public class AuthenticationUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        if (status.equals(Status.NOT_ACTIVE)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !status.equals(Status.NOT_ACTIVE);
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        if (status.equals(Status.DELETED)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !status.equals(Status.DELETED);
     }
 
     @Override

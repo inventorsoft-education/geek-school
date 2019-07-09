@@ -1,50 +1,39 @@
 package com.geekschool.controllers;
 
+import com.geekschool.dto.CourseTemplateDto;
+import com.geekschool.dto.LectionDto;
 import com.geekschool.entity.CourseTemplate;
 import com.geekschool.entity.Lection;
-import com.geekschool.entity.helper.CourseTemplateHelper;
+import com.geekschool.mapper.LectionMapper;
 import com.geekschool.repository.CourseTemplateRepository;
 import com.geekschool.repository.LectionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.geekschool.service.CourseTemplateService;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 public class CourseTemplateRestController {
 
-    private LectionRepository lectionRepository;
-    private CourseTemplateRepository courseTemplateRepository;
-    private List<Lection> lectionList;
 
-    @Autowired
-    public CourseTemplateRestController(LectionRepository lectionRepository1, CourseTemplateRepository courseTemplateRepository1, List<Lection> lectionList1){
-        this.lectionRepository = lectionRepository1;
-        this.courseTemplateRepository = courseTemplateRepository1;
-        this.lectionList = lectionList1;
+    private CourseTemplateService courseTemplateService;
+
+    @GetMapping(value = "/courses-templates")
+    public List<LectionDto> getCreateCourseTemplateForm() {
+
+        return courseTemplateService.getLectionDtoS();
     }
 
+    @PostMapping(value = "/course-templates")
+    public void sendInvitation(@RequestBody CourseTemplateDto courseTemplateDto) {
 
-    @PostMapping(value = "/saveCourseTemplate")
-    public void sendInvitation(@RequestBody CourseTemplateHelper courseTemplateHelper){
-
-        lectionList.clear();
-
-        CourseTemplate courseTemplate = new CourseTemplate();
-        courseTemplate.setName(courseTemplateHelper.getName());
-        courseTemplate.setDirection(courseTemplateHelper.getDirection());
-
-        for (String lectionName: courseTemplateHelper.getLections() ) {
-            if(lectionRepository.findByName(lectionName).isPresent()){
-                lectionList.add(lectionRepository.findByName(lectionName).get());
-            }
-        }
-
-        courseTemplate.setLections(lectionList);
-
-        courseTemplateRepository.save(courseTemplate);
+        courseTemplateService.saveCourseTemplate(courseTemplateDto);
 
     }
 }

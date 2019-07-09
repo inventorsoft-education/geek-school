@@ -1,6 +1,7 @@
 package com.geekschool.dto;
 
-import com.geekschool.entity.Subject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.geekschool.entity.Course;
 import com.geekschool.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,8 @@ public class GroupDto {
 
     private String description;
 
-    private Subject subjects;
+    private Course subject;
 
+    @JsonIgnore
     private Set<User> students;
 }

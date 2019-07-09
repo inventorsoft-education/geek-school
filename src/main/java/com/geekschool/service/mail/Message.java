@@ -1,8 +1,10 @@
-package com.geekschool.entity;
+package com.geekschool.service.mail;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -12,4 +14,6 @@ public class Message {
     private String subject;
     private String emailTo;
     private String description;
+    private String templateName;
+    private Map<String, Object> templateVariables;
 }

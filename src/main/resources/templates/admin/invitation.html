@@ -6,15 +6,25 @@
 <body>
 <div th:insert="layouts/layout :: header"></div>
 
+<div style="display: none" id="alertSuccess" class="single-widget search-widget" >
+    <div class="example generic-blockquote">
+        <button id="closeAlert" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        Invitation successfully sent! Close this window to continue!
+    </div>
+
+</div>
+
 <div class="row">
     <div class="col-md-6">
         <section class="button-area">
             <div class="container border-top-generic">
                 <div class="button-group-area">
-                    <a href="#" id="studentLink" class="genric-btn primary-border e-large">STUDENT LINK</a>
+                    <div id="studentLink" class="genric-btn primary-border e-large">STUDENT LINK</div>
                 </div>
                 <div class="button-group-area mt-10">
-                    <a href="" id="teacherLink" class="genric-btn primary-border e-large">TEACHER LINK</a>
+                    <div id="teacherLink" class="genric-btn primary-border e-large">TEACHER LINK</div>
                 </div>
             </div>
         </section>
@@ -24,13 +34,13 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8">
                     <h3 id="formTitle" class="mb-30">STUDENT'S EMAIL</h3>
-                    <form id="sendInvitationForm" th:action="@{/invitation}" class="button-group-area" method="post">
+                    <div id="sendInvitationForm" class="button-group-area">
                         <input id="formType" name="formType" type="hidden" value="STUDENT">
                         <div class="mt-10">
                             <input type="email" id="email" name="email" placeholder="Email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required class="single-input">
                         </div>
                         <button id="inviteButton" class="genric-btn success">INVITE</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,14 +69,18 @@
         json = { "formType" : formType, "email" : email};
 
         $.ajax({
-            type: 'post',
-            url: $("#sendInvitationForm").attr( "action"),
-            data: JSON.stringify(json)
+            type: 'get',
+            url: "/invitation",
+            data: json
         })
-            .always(function () {
-                alert("Success!")
-                window.location.assign('http://localhost:8080/invitation')
+            .success(function () {
+                document.getElementById("alertSuccess").style.display = 'block';
             })
+    })
+
+    $('#closeAlert').on('click', function () {
+        document.getElementById("alertSuccess").style.display = 'none';
+        window.location.assign("/")
     })
 
 </script>

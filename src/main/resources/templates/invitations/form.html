@@ -5,6 +5,15 @@
 </head>
 <body>
 <div th:insert="layouts/layout :: header"></div>
+<div style="display: none" id="alertSuccess" class="single-widget search-widget" >
+    <div class="example generic-blockquote">
+        <button id="closeAlert" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        Your information successfully saved! Close this window to continue!
+    </div>
+
+</div>
 
 <div class="row">
     <div class="col-md-3"></div>
@@ -13,24 +22,24 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8">
                     <h3 id="formTitle" class="mb-30">INVITATION FORM</h3>
-                    <form id="sendInvitationForm" th:action="@{/saveUser}" th:object="${user}" class="button-group-area" method="post">
-                        <input type="hidden" id="id" name="id" th:value="${invitedToken.getUser().getId()}" th:field="*{id}">
-                        <input type="hidden" id="email" name="email" th:value="${invitedToken.getUser().getEmail()}" th:field="*{email}">
-                        <input type="hidden" id="role" name="role" th:value="${invitedToken.getUser().getRole()}" th:field="*{role}">
+                    <div id="sendInvitationForm" class="button-group-area">
+                        <input type="hidden" id="id" name="id" th:value="${invitedToken.getUser().getId()}">
+                        <input type="hidden" id="email" name="email" th:value="${invitedToken.getUser().getEmail()}">
+                        <input type="hidden" id="role" name="role" th:value="${invitedToken.getUser().getRole()}">
                         <div class="mt-10">
-                            <input type="text" id="username" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required class="single-input" th:field="*{username}">
+                            <input type="text" id="username" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <input type="text" id="firstName" name="firstName" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First name'" required class="single-input" th:field="*{firstname}">
+                            <input type="text" id="firstName" name="firstName" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First name'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <input type="text" id="lastName" name="lastName" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last name'" required class="single-input" th:field="*{lastname}">
+                            <input type="text" id="lastName" name="lastName" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last name'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <input type="password" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required class="single-input" th:field="*{password}">
+                            <input type="password" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required class="single-input">
                         </div>
-                        <button id="registrationButton" class="genric-btn success">REGISTRATION</button>
-                    </form>
+                        <button id="registrationButton" type="submit" class="genric-btn success">REGISTRATION</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,5 +48,41 @@
 
 
 <div th:insert="layouts/layout :: footer"></div>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    $("#registrationButton").on('click', function () {
+        id = $('#id').val()
+        role = $('#role').val()
+        email = $('#email').val()
+        username = $('#username').val()
+        firstName = $('#firstName').val()
+        lastName = $('#lastName').val()
+        password = $('#password').val()
+
+        json = {"id" : id,
+                "role" : role,
+                "email" : email,
+                "username" : username,
+                "firstName" : firstName,
+                "lastName" : lastName,
+                "password" : password
+            };
+
+        $.ajax({
+            type: "post",
+            url: "/api/users/users/user",
+            data: json
+        })
+            .success(function () {
+                document.getElementById("alertSuccess").style.display = 'block';
+            })
+    })
+    $('#closeAlert').on('click', function () {
+        document.getElementById("alertSuccess").style.display = 'none';
+        window.location.assign("/")
+    })
+</script>
 </body>
 </html>

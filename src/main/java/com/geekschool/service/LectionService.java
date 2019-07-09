@@ -1,10 +1,9 @@
 package com.geekschool.service;
 
-import com.geekschool.dto.LectionDto;
 import com.geekschool.entity.Lection;
 import com.geekschool.entity.User;
-import com.geekschool.mapper.LectionMapper;
 import com.geekschool.repository.LectionRepository;
+import com.geekschool.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,44 +11,45 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class LectionService {
 
     private LectionRepository lectionRepository;
-    private LectionMapper lectionMapper;
+    private UserRepository userRepository;
 
     @Transactional
-    public LectionDto createLection(Lection lection) {
-        return lectionMapper.convertToLectionDto(lectionRepository.save(lection));
+    public Lection createLection(String name, String description, String username) {
+        Lection lection = new Lection();
+
+        User teacher = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        lection.setName(name);
+        lection.setDescription(description);
+        lection.setTeacher(teacher);
+
+        return lectionRepository.save(lection);
     }
 
     @Transactional
-    public LectionDto findLectionById(long id) {
+    public Lection findLectionById(long id) {
         return lectionRepository.findById(id)
-                .map(lection -> lectionMapper.convertToLectionDto(lection))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Transactional
-    public LectionDto findLectionByName(String name) {
-        return lectionRepository.findByName(name)
-                .map(lection -> lectionMapper.convertToLectionDto(lection))
+    public void updateTeacherById(long id, String username) {
+        User teacher = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        lectionRepository.updateTeacherById(id, teacher);
     }
 
     @Transactional
-    public void updateLectionById(long id, User user) {
-        lectionRepository.updateTeacherById(id, user);
-    }
-
-    @Transactional
-    public List<LectionDto> getAllLections() {
-        return lectionRepository.findAll().stream()
-                .map(lection -> lectionMapper.convertToLectionDto(lection))
-                .collect(Collectors.toList());
+    public List<Lection> getAllLections() {
+        return lectionRepository.findAll();
     }
 
     @Transactional
