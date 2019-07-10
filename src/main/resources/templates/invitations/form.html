@@ -23,17 +23,9 @@
                 <div class="col-lg-8 col-md-8">
                     <h3 id="formTitle" class="mb-30">INVITATION FORM</h3>
                     <div id="sendInvitationForm" class="button-group-area">
-                        <input type="hidden" id="id" name="id" th:value="${invitedToken.getUser().getId()}">
-                        <input type="hidden" id="email" name="email" th:value="${invitedToken.getUser().getEmail()}">
-                        <input type="hidden" id="role" name="role" th:value="${invitedToken.getUser().getRole()}">
+                        <input type="hidden" id="id" name="id">
                         <div class="mt-10">
                             <input type="text" id="username" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required class="single-input">
-                        </div>
-                        <div class="mt-10">
-                            <input type="text" id="firstName" name="firstName" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First name'" required class="single-input">
-                        </div>
-                        <div class="mt-10">
-                            <input type="text" id="lastName" name="lastName" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last name'" required class="single-input">
                         </div>
                         <div class="mt-10">
                             <input type="password" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required class="single-input">
@@ -52,26 +44,44 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+
+    $(document).ready(function(){
+        var pathname = window.location.pathname;
+        var reg = /(\w|-)+$/;
+        var token = reg.exec(pathname);
+        token = token[0];
+
+        $.ajax({
+            type: "get",
+            url: "/invitation/user/token",
+            data: {
+                "token" : token
+            },
+
+            success: function(id){
+                if(id != null){
+                    $("#id").val(id)
+                }
+                else{
+                    window.location.assign("/token/error")
+                }
+            }
+        })
+        //console.log()
+    })
+
     $("#registrationButton").on('click', function () {
         id = $('#id').val()
-        role = $('#role').val()
-        email = $('#email').val()
         username = $('#username').val()
-        firstName = $('#firstName').val()
-        lastName = $('#lastName').val()
         password = $('#password').val()
 
         json = {"id" : id,
-                "role" : role,
-                "email" : email,
                 "username" : username,
-                "firstName" : firstName,
-                "lastName" : lastName,
                 "password" : password
             };
 
         $.ajax({
-            type: "post",
+            type: "get",
             url: "/api/users/users/user",
             data: json
         })

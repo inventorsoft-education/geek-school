@@ -71,4 +71,13 @@ public class UserService {
     public User findById(Long id) {
         return userRepository.findById(id).get();
     }
+
+    public void saveUserByInvitation(Long id, String username, String password){
+
+        User user = findById(id);
+        user.setUsername(username);
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        user.setStatus(Status.ACTIVE);
+        userRepository.save(user);
+    }
 }
