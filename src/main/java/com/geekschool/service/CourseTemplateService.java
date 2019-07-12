@@ -8,8 +8,11 @@ import com.geekschool.mapper.LectionMapper;
 import com.geekschool.repository.CourseTemplateRepository;
 import com.geekschool.repository.LectionRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -32,4 +35,16 @@ public class CourseTemplateService {
 
         return lectionMapper.convertToLectionDtoS(lectionRepository.findAll());
     }
+
+    @Transactional
+    public List<CourseTemplate> getAllCourses() {
+        return courseTemplateRepository.findAll();
+    }
+
+    @Transactional
+    public CourseTemplate findById(Long id) {
+        return courseTemplateRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 }
+

@@ -4,9 +4,11 @@ import com.geekschool.dto.LectionDto;
 import com.geekschool.mapper.LectionMapper;
 import com.geekschool.service.LectionService;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +48,14 @@ public class LectionController {
     public void updateTeacherOnLecture(@PathVariable("id") Long id,
                                        @RequestParam("teacher_name") String username) {
        lectionService.updateTeacherById(id, username);
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updateDateLection(@RequestParam("id_lection") Long id,
+                                 @RequestParam("creation_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime startDate,
+                                 @RequestParam("end_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime endDate) {
+        lectionService.updateDateCourse(id, startDate, endDate);
     }
 
     @DeleteMapping("{id}")

@@ -1,13 +1,7 @@
 package com.geekschool.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -33,11 +27,8 @@ public class Course {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @JsonIgnore
     @ToString.Exclude
-    @ManyToMany
-    @JoinTable(name = "course_lection",
-            joinColumns = {@JoinColumn(name = "course_id")},
-            inverseJoinColumns = {@JoinColumn(name = "lection_id")})
-    private List<Lection> lections;
-
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<CourseLection> courseLection;
 }

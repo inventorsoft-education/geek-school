@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:include="layouts/layout :: headerFragment">
+    <title id="pageTitle">Courses</title>
+</head>
+<body>
+<div th:insert="layouts/layout :: header"></div>
+
+<section id="active_course" class="pb-5">
+    <div class="container">
+        <h5 class="section-title h1">Our active courses</h5>
+        <div class="row" id="active_courses_list">
+        </div>
+    </div>
+</section>
+
+<section id="teamlate_course" class="pb-5">
+    <div class="container">
+        <h5 class="section-title h1">Our template courses</h5>
+        <div class="row" id="courses_list">
+        </div>
+    </div>
+</section>
+
+<script id="entry" type="text/x-handlebars-template">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="image-flip" id="eventer" ontouchstart="this.classList.toggle('hover');">
+            <div class="mainflip">
+                <div class="frontside">
+                    <div class="card" rel="{{id}}" id="frontside_card_t">
+                        <div class="card-body text-center">
+                            <img class="img-fluid" th:src="@{/img/course-logo.png}" alt="card image">
+                            <h4 class="card-title">{{name}}</h4>
+                            <p class="card-text">{{description}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="backside" id="backside_card_t">
+                    <div class="mainflip">
+                        <div class="card">
+                            <div class="card-body text-center mt-4">
+                                <h4 class="card-title">Name: <i style="color:#007b5e">{{name}}</i></h4>
+                                <h4 class="card-title">Description: <i style="color:#007b5e">{{direction}}</i>
+                                </h4>
+                                <div class="list-inline">
+                                    <li class="list-inline-item">
+                                        <div class="button-group-area mt-10">
+                                            <button rel="{{id}}" id="btn_create_course"
+                                                    class="genric-btn primary-border">Create
+                                            </button>
+                                        </div>
+                                    </li>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="script_active_course" type="text/x-handlebars-template">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="image-flip" id="eventer_active" ontouchstart="this.classList.toggle('hover');">
+            <div class="mainflip">
+                <div class="frontside" rel="{{id}}" id="frontside_action">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <img class="img-fluid" th:src="@{/img/course-logo.png}" alt="card image">
+                            <h4 class="card-title">{{name}}</h4>
+                            <p class="card-text">{{description}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="backside">
+                    <div class="mainflip">
+                        <div class="card">
+                            <div class="card-body text-center mt-4">
+                                <h5 class="card-title">Name: <i style="color:#007b5e">{{name}}</i></h5>
+                                <h5 class="card-title">Description: <i style="color:#007b5e">{{description}}</i>
+                                </h5>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <div class="button-group-area mt-10">
+                                            <button href="#" rel="{{id}}" id="btn_delete_course"
+                                                    class="genric-btn primary-border">Delete
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Enter date</h4>
+            </div>
+            <div class="container border-top-generic">
+                <div class="modal-body">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="mt-10">
+                                <h5>Begin</h5>
+                                <input id="start_time" type="datetime-local"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="mt-10">
+                                <h5>End</h5>
+                                <input id="end_time" type="datetime-local"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="hidden" name="isEmpty" value="">
+                        <button type="input" name="submit" id="btn_ok" value="newAccount"
+                                class="genric-btn primary">
+                            <i class="fa fa-check"></i> Create
+                        </button>
+                        <button type="button" class="genric-btn primary" id="btn_cancel" data-dismiss="modal">
+                            <i class="fa fa-times-circle"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/app/courses.js"></script>
+
+<div th:insert="layouts/layout :: footer">...</div>
+
+</body>
+</html>

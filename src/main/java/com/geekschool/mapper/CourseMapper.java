@@ -13,6 +13,7 @@ public class CourseMapper {
                 course.getName(),
                 course.getDescription(),
                 course.getStatus(),
-                course.getLections());
+                course.getCourseLection());
     }
 }
+
