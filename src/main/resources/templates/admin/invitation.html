@@ -36,7 +36,8 @@
                     <h3 id="formTitle" class="mb-30">STUDENT'S EMAIL</h3>
                     <div id="sendInvitationForm" class="button-group-area">
                         <input id="formType" name="formType" type="hidden" value="STUDENT">
-                        <div class="mt-10">
+                        <div id="divEmail" name="divEmail" class="mt-10">
+                            <span id="labelEmail" name="labelEmail" class="text-danger" style="display: none"></span>
                             <input type="email" id="email" name="email" placeholder="Email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required class="single-input">
                         </div>
                         <button id="inviteButton" class="genric-btn success">INVITE</button>
@@ -47,19 +48,20 @@
     </div>
 </div>
 
-
 <div th:insert="layouts/layout :: footer"></div>
 <script>
     $('#studentLink').on('click', function () {
         $('#formTitle').html("STUDENT'S EMAIL")
         $('#formType').val('STUDENT')
         $('#email').val("")
+        removeAlerts()
     })
 
     $('#teacherLink').on('click', function () {
         $('#formTitle').html("TEACHER'S EMAIL")
         $('#formType').val('TEACHER')
         $('#email').val("")
+        removeAlerts()
     })
 
 
@@ -68,13 +70,32 @@
         email = $('#email').val()
         json = { "formType" : formType, "email" : email};
 
+        $('#inviteButton').html("INVITING...")
+
         $.ajax({
             type: 'get',
             url: "/invitation",
             data: json
         })
-            .success(function () {
-                document.getElementById("alertSuccess").style.display = 'block';
+            .success(function (errors) {
+
+                $('#inviteButton').html("INVITE")
+
+                if(errors.success){
+                    removeAlerts();
+                    document.getElementById("alertSuccess").style.display = 'block';
+                }
+                else {
+
+                    if(errors.email){
+                        $('#labelEmail').html(errors.email)
+                        document.getElementById("labelEmail").style.display = 'inline-block';
+                        $('#divEmail').addClass("border border-danger p-3");
+                        document.getElementById("alertSuccess").style.display = 'none';
+                    }
+                }
+
+
             })
     })
 
@@ -83,6 +104,11 @@
         window.location.assign("/")
     })
 
+    function removeAlerts() {
+        $('#labelEmail').html("")
+        document.getElementById("labelEmail").style.display = 'none';
+        $('#divEmail').removeClass("border border-danger p-3");
+    }
 </script>
 </body>
 </html>
