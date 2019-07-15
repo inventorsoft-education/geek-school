@@ -21,9 +21,19 @@ import java.util.UUID;
 public class ForgotPasswordRestController {
 
     private ForgotPasswordService forgotPasswordService;
+    private InvitedTokenRepository invitedTokenRepository;
 
     @GetMapping(value = "/forgot-password-send")
     public void restorePassword(@RequestParam String login){
         forgotPasswordService.sendRestorePasswordLink(login);
+    }
+
+    @GetMapping(value = "/password/user/token")
+    public Long getInformationByToken(@RequestParam String token){
+        InvitedToken invitedToken = invitedTokenRepository.findByToken(token);
+        if(forgotPasswordService.checkToken(invitedToken)){
+            return invitedToken.getUser().getId();
+        }
+        return null;
     }
 }

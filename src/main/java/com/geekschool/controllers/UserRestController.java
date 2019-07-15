@@ -57,9 +57,10 @@ public class UserRestController {
         userService.updateStatusById(id, status);
     }
 
-    @PostMapping(value = "/users/user")
-    private void saveUser(@RequestBody User user){
-        userService.saveUser(user);
+    @GetMapping(value = "/users/user")
+    private void saveUser(@RequestParam Long id, String username, String password)
+    {
+        userService.saveUserByInvitation(id, username, password);
     }
 
 
