@@ -12,5 +12,5 @@ public class CourseTemplateDto {
     private Long id;
     private String name;
     private String direction;
-    private List<String> lections;
+    private List<LectionDto> lections;
 }

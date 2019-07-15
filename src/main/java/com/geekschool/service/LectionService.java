@@ -1,5 +1,6 @@
 package com.geekschool.service;
 
+import com.geekschool.entity.CourseLection;
 import com.geekschool.entity.Lection;
 import com.geekschool.entity.User;
 import com.geekschool.repository.LectionRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -45,6 +47,19 @@ public class LectionService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         lectionRepository.updateTeacherById(id, teacher);
+    }
+
+    @Transactional
+    public void updateDateCourse(Long id, LocalDateTime start, LocalDateTime end) {
+        Lection lection = findLectionById(id);
+
+        List<CourseLection> courseLections = lection.getCourseLections();
+        for (CourseLection courseLection: courseLections) {
+            courseLection.setCreationDate(start);
+            courseLection.setEndDate(end);
+        }
+        lection.setCourseLections(courseLections);
+        lectionRepository.save(lection);
     }
 
     @Transactional

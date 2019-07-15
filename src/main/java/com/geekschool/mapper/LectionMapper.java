@@ -3,7 +3,6 @@ package com.geekschool.mapper;
 import com.geekschool.dto.LectionDto;
 import com.geekschool.entity.Lection;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,7 +19,8 @@ public class LectionMapper {
                 lection.getId(),
                 lection.getName(),
                 lection.getDescription(),
-                userMapper.convertToUserDto(lection.getTeacher())
+                userMapper.convertToUserDto(lection.getTeacher()),
+                lection.getCourseLections()
         );
     }
 

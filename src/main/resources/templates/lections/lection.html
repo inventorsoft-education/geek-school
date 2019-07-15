@@ -94,21 +94,25 @@
                     <div class="mainflip">
                         <div class="card">
                             <div class="card-body text-center mt-4">
-                                <h4 class="card-title">Name: <i style="color:#007b5e">{{name}}</i></h4>
-                                <h4 class="card-title">Description: <i style="color:#007b5e">{{description}}</i>
-                                </h4>
-                                <h4 class="card-title">Teacher:
+                                <h5 class="card-title">Name: <i style="color:#007b5e">{{name}}</i>      <button type="button" rel="{{id}}" class="fa fa-pencil"
+                                                                                                                id="btn_change_teacher">
+                                    <span class="glyphicon glyphicon-wrench"></span>
+                                </button></h5>
+                                <h5 class="card-title" id="descr{{id}}">Description: <i style="color:#007b5e">{{description}}</i>
+                                </h5>
+                                <h5 class="card-title">Teacher:
                                     <i style="color:#007b5e">{{teacher.username}} </i>
-                                    <button type="button" rel="{{id}}" class="fa fa-pencil"
-                                            id="btn_change_teacher">
-                                        <span class="glyphicon glyphicon-wrench"></span>
-                                    </button>
                                     <input type="text" name="input_teacher" id="tech{{id}}" list="teacher_list"
                                            style="display:none">
                                     <datalist id="teacher_list">
                                     </datalist>
-                                </h4>
-                                <h4 class="card-title">Course: <i style="color:#007b5e">{{course.name}}</i></h4>
+                                    <h5 id="date_text{{id}}">{{#each courseLections}}
+                                        <p>Start : <i style="color:#007b5e">{{creationDate}}</i></p>
+                                        <p>End : <i style="color:#007b5e">{{endDate}}</i></p>
+                                        {{/each}}</h5>
+                                    <h5 class="card-title" id="start_date_l{{id}}" style="display:none">Start date: </h5> <input id="start_time_active{{id}}" type="datetime-local" style="display:none"/>
+                                    <h5 class="card-title" id="end_date_l{{id}}" style="display:none">End date: </h5><input id="end_time_active{{id}}" type="datetime-local" style="display:none"/>
+                                </h5>
                                 <ul class="list-inline">
                                     <li class="list-inline-item">
                                         <div class="button-group-area mt-10">

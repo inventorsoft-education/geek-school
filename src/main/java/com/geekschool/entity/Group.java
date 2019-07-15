@@ -1,5 +1,6 @@
 package com.geekschool.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class Group {
     @JoinColumn(name = "course_id")
     private Course course;
 
-
+    @JsonIgnore
     @ToString.Exclude
     @ManyToMany
     @JoinTable(name = "user_group",

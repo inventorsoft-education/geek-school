@@ -2,20 +2,14 @@ package com.geekschool.controllers;
 
 import com.geekschool.dto.CourseTemplateDto;
 import com.geekschool.dto.LectionDto;
-import com.geekschool.entity.CourseTemplate;
-import com.geekschool.entity.Lection;
-import com.geekschool.mapper.LectionMapper;
-import com.geekschool.repository.CourseTemplateRepository;
-import com.geekschool.repository.LectionRepository;
+import com.geekschool.mapper.CourseTemplateMapper;
 import com.geekschool.service.CourseTemplateService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -23,6 +17,7 @@ public class CourseTemplateRestController {
 
 
     private CourseTemplateService courseTemplateService;
+    private CourseTemplateMapper courseTemplateMapper;
 
     @GetMapping(value = "/courses-templates")
     public List<LectionDto> getCreateCourseTemplateForm() {
@@ -32,8 +27,15 @@ public class CourseTemplateRestController {
 
     @PostMapping(value = "/course-templates")
     public void sendInvitation(@RequestBody CourseTemplateDto courseTemplateDto) {
-
         courseTemplateService.saveCourseTemplate(courseTemplateDto);
+    }
 
+    @GetMapping("${api}/courses-template")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CourseTemplateDto> getCoursesTemplate() {
+        return courseTemplateService.getAllCourses()
+                .stream()
+                .map(c -> courseTemplateMapper.convertToCourseTemplateDto(c))
+                .collect(Collectors.toList());
     }
 }

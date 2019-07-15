@@ -22,7 +22,6 @@ $(document).ready(function() {
             }
         });
     };
-
         function loadTeacher(elementById, putId) {
         $.ajax({
             type: 'GET',
@@ -77,6 +76,26 @@ $(document).ready(function() {
         })
     };
 
+    function updateDateCourse(id_lection, startDate, endDate) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var headerName = $("meta[name='_csrf_header']").attr("content");
+        $.ajax({
+            type: 'PUT',
+            url: '/api/lections',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(headerName, token);
+            },
+            data: {
+                'id_lection': id_lection,
+                'creation_date': startDate,
+                'end_date': endDate
+            },
+            success: function () {
+                loadLection();
+            }
+        })
+    }
+
     function deleteLection(id) {
         var token = $("meta[name='_csrf']").attr("content");
         var headerName = $("meta[name='_csrf_header']").attr("content");
@@ -109,19 +128,45 @@ $(document).ready(function() {
 
     $("#lection_list").on('click', "#btn_change_teacher", function() {
         var id_lection = $(this).attr("rel");
+
+        var start_date_l = '#start_date_l' +id_lection;
+        var end_date_l = '#end_date_l' +id_lection;
+        var description_id = '#descr' + id_lection;
+        var date_text = '#date_text' + id_lection;
         var input_teacher_id = '#tech' + id_lection;
+        var start_time_lection = '#start_time_active' + id_lection;
+        var end_time_lection = '#end_time_active' + id_lection;
+
         if ($(input_teacher_id).is(":visible")) {
             $(input_teacher_id).hide();
+            $(start_time_lection).hide();
+            $(start_date_l).hide();
+            $(end_date_l).hide();
+            $(end_time_lection).hide();
+            $(description_id).show();
+            $(date_text).show();
+
             isReady = true;
         } else {
+            $(description_id).hide();
+            $(date_text).hide();
             $(input_teacher_id).show();
+            $(start_time_lection).show();
+            $(end_time_lection).show();
+            $(start_date_l).show();
+            $(end_date_l).show();
+
             isReady = false;
         }
 
         $('#lection_list').on('click', '#btn_change_teacher_ok', function() {
             isReady = true;
+            var id_update_lection = $(this).attr("rel");
             var teacher_id = $(input_teacher_id).val();
+            var start_time_stamp = $('#start_time_active' + id_update_lection).val();
+            var end_time_stamp = $('#end_time_active' + id_update_lection).val();
             updateTeacher(id_lection, teacher_id);
+            updateDateCourse(id_update_lection, start_time_stamp, end_time_stamp)
         });
     });
 
@@ -133,7 +178,7 @@ $(document).ready(function() {
         var putId = '#input_teacher';
         loadTeacher(elementById, putId);
 
-        $('#btn_cancel').on('click', function() {
+        $('#btn_cancel').on('cbtn_change_teacherlick', function() {
          //   $('#new_lection').hide();
             document.getElementById("add_lection_btn").style.visibility="visible";
         })
@@ -146,7 +191,6 @@ $(document).ready(function() {
             var name = $('#input_name').val();
             var description = $('#input_description').val();
             var teacher_name = $('#teacher').val();
-            var subject_name = $('#subject').val();
 
             $.ajax({
                 type: "POST",
@@ -158,7 +202,6 @@ $(document).ready(function() {
                     "name": name,
                     "description": description,
                     "teacher_name": teacher_name,
-                    "subject_name": subject_name
                 },
                 success: function() {
                     location.reload();

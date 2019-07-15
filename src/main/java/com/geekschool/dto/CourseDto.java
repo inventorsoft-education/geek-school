@@ -1,7 +1,7 @@
 package com.geekschool.dto;
 
+import com.geekschool.entity.CourseLection;
 import com.geekschool.entity.Status;
-import com.geekschool.entity.Lection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +21,6 @@ public class CourseDto {
 
     private Status status;
 
-    private List<Lection> lections;
+    private List<CourseLection> courseLections;
 }
+
