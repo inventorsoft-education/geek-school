@@ -6,6 +6,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
+import java.util.*;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,25 +16,29 @@ import java.util.Map;
 @Service
 public class ValidationService {
 
-    private Map<String,String> errorsArray;
 
-    public Map<String,String> checkErrors(BindingResult result){
-        errorsArray.clear();
-        if (result.hasErrors()){
+    public Map<String,List<String>> constructErrorPayload(BindingResult result) {
 
-            List<ObjectError> errors = result.getAllErrors();
+        Map<String, List<String>> errors = new HashMap<>();
+        List<ObjectError> fieldErrors = result.getAllErrors();
 
-            for (ObjectError error : errors) {
+        for (ObjectError error : fieldErrors) {
 
-                String fieldErrors = ((FieldError) error).getField();
-                errorsArray.put(fieldErrors,error.getDefaultMessage());
+            String fieldError = ((FieldError) error).getField();
+
+            if (errors.get(fieldError) != null) {
+                List<String> messages = errors.get(fieldError);
+                messages.add(error.getDefaultMessage());
+                errors.put(fieldError, messages);
+            } else {
+                List<String> messages = new ArrayList<>();
+                messages.add(error.getDefaultMessage());
+                errors.put(fieldError, messages);
+
             }
 
-            return errorsArray;
         }
-        else {
-            errorsArray.put("success","success");
-            return errorsArray;
-        }
+        return errors;
     }
+
 }
