@@ -85,12 +85,12 @@ $(document).ready(function () {
 
     $('#courses_list').on('click', '#btn_create_course', function () {
         var id_course_template = $(this).attr("rel");
-        var start_time_stamp = $('#start_time').val();
-        var end_time_stamp = $('#end_time').val();
 
         $('.modal').modal('show');
 
         $('#btn_ok').on('click', function(e) {
+            var start_time_stamp = $('#start_time').val();
+            var end_time_stamp = $('#end_time').val();
             createCourseOnTheTemplate(id_course_template, start_time_stamp, end_time_stamp);
             $('.modal').modal('hide');
         });
