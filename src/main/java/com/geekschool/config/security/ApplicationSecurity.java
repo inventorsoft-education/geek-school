@@ -4,6 +4,7 @@ import com.geekschool.entity.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,8 +31,13 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/invitation/user/token").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/invitation/user").permitAll()
+               /* .antMatchers(LOGIN_ENDPOINT, "/invitation/user/token").permitAll()
+                .antMatchers(LOGIN_ENDPOINT, "/api/users/invitation/user").permitAll()*/
                 .antMatchers(LOGIN_ENDPOINT, "/css/**", "/js/**", "/scss/**", "/img/**", "/fonts/**",
-                        "/forgotPassword","/forgot-password-send", "/user/password/{token}", "/user/{token}", "/users/password", "/users/user", "/api/users/users/user").permitAll()
+                        "/forgotPassword","/forgot-password-send", "/user/password/{token}", "/user/{token}", "/users/password",
+                        "/users/user").permitAll()
                 .antMatchers(ADMIN_ENDPOINT, "/api/lection/**", "/lection/**", "/api/groups/admin/**",
                         "/groups", "/api/users/admin/**", "/users").hasAuthority(Role.ADMIN.getAuthority())
                 .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())

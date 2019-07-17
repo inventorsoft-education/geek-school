@@ -40,8 +40,6 @@
 
 
 <div th:insert="layouts/layout :: footer"></div>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
 
@@ -52,7 +50,7 @@
         token = token[0];
 
         $.ajax({
-            type: "get",
+            type: "post",
             url: "/invitation/user/token",
             data: {
                 "token" : token
@@ -61,13 +59,13 @@
             success: function(id){
                 if(id != null){
                     $("#id").val(id)
+                    console.log(id)
                 }
                 else{
                     window.location.assign("/token/error")
                 }
             }
         })
-        //console.log()
     })
 
     $("#registrationButton").on('click', function () {
@@ -80,9 +78,11 @@
                 "password" : password
             };
 
+        console.log(json)
+
         $.ajax({
-            type: "get",
-            url: "/api/users/users/user",
+            type: "post",
+            url: "/api/users/invitation/user",
             data: json
         })
             .success(function () {
