@@ -1,8 +1,9 @@
 package com.geekschool.service;
 
-import com.geekschool.dto.CourseTemplateDto;
-import com.geekschool.dto.LectionDto;
+import com.geekschool.dto.courses.CourseTemplateDto;
+import com.geekschool.dto.lections.LectionDto;
 import com.geekschool.entity.CourseTemplate;
+import com.geekschool.entity.Lection;
 import com.geekschool.mapper.CourseTemplateMapper;
 import com.geekschool.mapper.LectionMapper;
 import com.geekschool.repository.CourseTemplateRepository;
@@ -45,6 +46,11 @@ public class CourseTemplateService {
     public CourseTemplate findById(Long id) {
         return courseTemplateRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @Transactional
+    public List<Lection> findLeturesByCourse(Long id) {
+        return findById(id).getLections();
     }
 }
 

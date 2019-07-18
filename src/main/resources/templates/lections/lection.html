@@ -8,21 +8,15 @@
 <div th:insert="layouts/layout :: header"></div>
 
 
-
-
-
 <section id="team" class="pb-5">
     <div class="container">
 
         <h5 class="section-title h1">Our Lection</h5>
         <div class="row" id="lection_list">
         </div>
-
-
         <button type="button" data-toggle="modal" data-target="#myModal" id="add_lection_btn" class="btn btn-secondary">
             Create lection
         </button>
-
     </div>
 
 </section>
@@ -38,14 +32,18 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="mt-10">
-                                <input type="text" name="name" id="input_name" placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'" required class="single-input">
+                                <input type="text" name="name" id="input_name" placeholder="name"
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'" required
+                                       class="single-input">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="mt-10">
-                                <input type="text" name="description" id="input_description" placeholder="description" onfocus="this.placeholder = ''" onblur="this.placeholder = 'description'" required class="single-input">
+                                <input type="text" name="description" id="input_description" placeholder="description"
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'description'"
+                                       required class="single-input">
                             </div>
                         </div>
                     </div>
@@ -53,7 +51,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="mt-10">
-                                <input type="text" name="teachers" list="input_teacher" id="teacher" placeholder="teacher" onfocus="this.placeholder = ''" onblur="this.placeholder = 'teacher'" required class="single-input">
+                                <input type="text" name="teachers" list="input_teacher" id="teacher"
+                                       placeholder="teacher" onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = 'teacher'" required class="single-input">
                             </div>
                             <datalist id="input_teacher">
 
@@ -94,10 +94,7 @@
                     <div class="mainflip">
                         <div class="card">
                             <div class="card-body text-center mt-4">
-                                <h5 class="card-title">Name: <i style="color:#007b5e">{{name}}</i>      <button type="button" rel="{{id}}" class="fa fa-pencil"
-                                                                                                                id="btn_change_teacher">
-                                    <span class="glyphicon glyphicon-wrench"></span>
-                                </button></h5>
+                                <h5 class="card-title">Name: <i style="color:#007b5e">{{name}}</i></h5>
                                 <h5 class="card-title" id="descr{{id}}">Description: <i style="color:#007b5e">{{description}}</i>
                                 </h5>
                                 <h5 class="card-title">Teacher:
@@ -106,17 +103,34 @@
                                            style="display:none">
                                     <datalist id="teacher_list">
                                     </datalist>
-                                    <h5 id="date_text{{id}}">{{#each courseLections}}
-                                        <p>Start : <i style="color:#007b5e">{{creationDate}}</i></p>
-                                        <p>End : <i style="color:#007b5e">{{endDate}}</i></p>
-                                        {{/each}}</h5>
-                                    <h5 class="card-title" id="start_date_l{{id}}" style="display:none">Start date: </h5> <input id="start_time_active{{id}}" type="datetime-local" style="display:none"/>
-                                    <h5 class="card-title" id="end_date_l{{id}}" style="display:none">End date: </h5><input id="end_time_active{{id}}" type="datetime-local" style="display:none"/>
+                                    <button type="button" rel="{{id}}" class="fa fa-pencil"
+                                            id="btn_change_teacher">
+                                        <span class="glyphicon glyphicon-wrench"></span></button>
                                 </h5>
+                                {{#each courseLections}}
+                                <H5>Course <i style="color:#007b5e">{{course.name}}</i> :
+                                    <button type="button" rel="{{lection.id}}" value="{{course.id}}"
+                                            class="fa fa-calendar"
+                                            id="btn_change_date">
+                                        <span class="glyphicon glyphicon-wrench"></span></button>
+                                </h5>
+                                <div id="date_course{{lection.id}}{{course.id}}">
+                                    <p id="p_create_date{{course.id}}{{lection.id}}"><i style="color:#007b5e">{{creationDate}}</i>
+                                    </p>
+                                    <p><i id="p_end_date{{course.id}}{{lection.id}}"
+                                          style="color:#007b5e">{{endDate}}</i>
+                                    </p>
+                                </div>
+                                {{/each}}
+
+                                <h5 class="card-title" id="start_date_l{{id}}" style="display:none">Start date: </h5>
+                                <input id="start_time_active{{id}}" type="datetime-local" style="display:none"/>
+                                <h5 class="card-title" id="end_date_l{{id}}" style="display:none">End date: </h5><input
+                                    id="end_time_active{{id}}" type="datetime-local" style="display:none"/>
                                 <ul class="list-inline">
                                     <li class="list-inline-item">
-                                        <div class="button-group-area mt-10">
-                                            <button rel="{{id}}" id="btn_change_teacher_ok"
+                                        <div btn_change_teacher>
+                                            <button rel="{{id}}" id="btn_save"
                                                     class="genric-btn primary-border">Save
                                             </button>
                                         </div>
@@ -140,10 +154,6 @@
 
 <script id="teacher-template" type="text/x-handlebars-template">
     <option value="{{username}}"></option>
-</script>
-
-<script id="lection_subject" type="text/x-handlebars-template">
-    <option name="{{id}}" id="group_id">{{name}}</option>
 </script>
 <script id="lection_teacher" type="text/x-handlebars-template">
     <option name="{{id}}" id="id_teacher">{{username}}</option>

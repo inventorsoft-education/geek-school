@@ -1,6 +1,6 @@
 package com.geekschool.mapper;
 
-import com.geekschool.dto.LectionDto;
+import com.geekschool.dto.lections.LectionDto;
 import com.geekschool.entity.Lection;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

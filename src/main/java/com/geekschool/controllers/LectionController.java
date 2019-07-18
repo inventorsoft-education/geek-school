@@ -1,13 +1,18 @@
 package com.geekschool.controllers;
 
-import com.geekschool.dto.LectionDto;
+import com.geekschool.dto.courses.CourseLectionsDto;
+import com.geekschool.dto.lections.LectionDateDto;
+import com.geekschool.dto.lections.LectionDto;
+import com.geekschool.dto.lections.LectionValidDto;
 import com.geekschool.mapper.LectionMapper;
 import com.geekschool.service.LectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,14 +40,6 @@ public class LectionController {
         return lectionMapper.convertToLectionDto(lectionService.findLectionById(id));
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public LectionDto addLection(@RequestParam("name") String name,
-                                 @RequestParam("description") String description,
-                                 @RequestParam("teacher_name") String username) {
-        return lectionMapper.convertToLectionDto(lectionService.createLection(name, description, username));
-    }
-
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public void updateTeacherOnLecture(@PathVariable("id") Long id,
@@ -50,12 +47,16 @@ public class LectionController {
        lectionService.updateTeacherById(id, username);
     }
 
-    @PutMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void updateDateLection(@RequestParam("id_lection") Long id,
-                                 @RequestParam("creation_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime startDate,
-                                 @RequestParam("end_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime endDate) {
-        lectionService.updateDateCourse(id, startDate, endDate);
+    public LectionDto addLection(@Valid @RequestBody LectionValidDto lectionValidDto) {
+        return lectionMapper.convertToLectionDto(lectionService.createLection(lectionValidDto));
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public void updateDateLection(@Valid @RequestBody CourseLectionsDto courseLectionsDto) {
+        lectionService.updateDateCourse(courseLectionsDto);
     }
 
     @DeleteMapping("{id}")

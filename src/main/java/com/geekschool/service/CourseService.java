@@ -1,8 +1,8 @@
 package com.geekschool.service;
 
-import com.geekschool.dto.LectionDto;
+import com.geekschool.dto.courses.CourseLectionsDto;
+import com.geekschool.dto.lections.LectionDateDto;
 import com.geekschool.entity.*;
-import com.geekschool.mapper.LectionMapper;
 import com.geekschool.repository.CourseRepository;
 import com.geekschool.repository.CourseTemplateRepository;
 import com.geekschool.repository.LectionRepository;
@@ -12,12 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,6 +21,8 @@ public class CourseService {
 
     private CourseRepository courseRepository;
     private CourseTemplateRepository courseTemplateRepository;
+
+    private LectionRepository lectionRepository;
 
     @Transactional
     public Course findByName(String name) {
@@ -43,25 +41,25 @@ public class CourseService {
     }
 
     @Transactional
-    public Course createCourseOnTheTemplate(Long id, LocalDateTime startDate, LocalDateTime endDate) {
+    public Course createCourseOnTheTemplate(CourseLectionsDto lectionDtoList) {
         Course course = new Course();
-        CourseTemplate courseTemplate = courseTemplateRepository.findById(id)
+        CourseTemplate courseTemplate = courseTemplateRepository.findById(lectionDtoList.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         course.setName(courseTemplate.getName());
         course.setDescription(courseTemplate.getDirection());
         course.setStatus(Status.ACTIVE);
 
-        List<Lection> lections = courseTemplate.getLections();
+        List<LectionDateDto> lections = lectionDtoList.getLectionDateDtoList();
 
         List<CourseLection> courseLections = new ArrayList<>();
 
         for (int i = 0; i <= lections.size() - 1; i++) {
             courseLections.add(new CourseLection(
                     course,
-                    lections.get(i),
-                    startDate,
-                    endDate));
+                    lectionRepository.findById(lections.get(i).getIdLection()).get(),
+                    lections.get(i).getStartDate(),
+                    lections.get(i).getEndDate()));
         }
 
         course.setCourseLection(courseLections);

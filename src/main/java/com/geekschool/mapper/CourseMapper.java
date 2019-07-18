@@ -1,6 +1,6 @@
 package com.geekschool.mapper;
 
-import com.geekschool.dto.CourseDto;
+import com.geekschool.dto.courses.CourseDto;
 import com.geekschool.entity.Course;
 import org.springframework.stereotype.Component;
 

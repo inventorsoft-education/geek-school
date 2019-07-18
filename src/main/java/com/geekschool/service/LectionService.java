@@ -1,5 +1,8 @@
 package com.geekschool.service;
 
+import com.geekschool.dto.courses.CourseLectionsDto;
+import com.geekschool.dto.lections.LectionDateDto;
+import com.geekschool.dto.lections.LectionValidDto;
 import com.geekschool.entity.CourseLection;
 import com.geekschool.entity.Lection;
 import com.geekschool.entity.User;
@@ -11,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,14 +24,14 @@ public class LectionService {
     private UserRepository userRepository;
 
     @Transactional
-    public Lection createLection(String name, String description, String username) {
+    public Lection createLection(LectionValidDto lectionValidDto) {
         Lection lection = new Lection();
 
-        User teacher = userRepository.findByUsername(username)
+        User teacher = userRepository.findByUsername(lectionValidDto.getTeacherName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        lection.setName(name);
-        lection.setDescription(description);
+        lection.setName(lectionValidDto.getName());
+        lection.setDescription(lectionValidDto.getDescription());
         lection.setTeacher(teacher);
 
         return lectionRepository.save(lection);
@@ -50,13 +52,19 @@ public class LectionService {
     }
 
     @Transactional
-    public void updateDateCourse(Long id, LocalDateTime start, LocalDateTime end) {
-        Lection lection = findLectionById(id);
+    public void updateDateCourse(CourseLectionsDto courseLectionsDto) {
+        List<LectionDateDto> lectionDateDtoList = courseLectionsDto.getLectionDateDtoList();
+
+        Lection lection = findLectionById(lectionDateDtoList.get(0).getIdLection());
 
         List<CourseLection> courseLections = lection.getCourseLections();
+
         for (CourseLection courseLection: courseLections) {
-            courseLection.setCreationDate(start);
-            courseLection.setEndDate(end);
+            if (courseLection.getCourse().getId().equals(courseLectionsDto.getId())
+                    && courseLection.getLection().getId().equals(courseLectionsDto.getLectionDateDtoList().get(0).getIdLection())) {
+                courseLection.setCreationDate(lectionDateDtoList.get(0).getStartDate());
+                courseLection.setEndDate(lectionDateDtoList.get(0).getEndDate());
+            }
         }
         lection.setCourseLections(courseLections);
         lectionRepository.save(lection);

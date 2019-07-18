@@ -1957,7 +1957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        if (this.lexer.showPosition) {
 	                            errStr = "Parse error on line " + (yylineno + 1) + ":\n" + this.lexer.showPosition() + "\nExpecting " + expected.join(", ") + ", got '" + (this.terminals_[symbol] || symbol) + "'";
 	                        } else {
-	                            errStr = "Parse error on line " + (yylineno + 1) + ": Unexpected " + (symbol == 1 ? "end of input" : "'" + (this.terminals_[symbol] || symbol) + "'");
+	                            errStr = "Parse error on line " + (yylineno + 1) + ": Unexpected " + (symbol == 1 ? "endDate of input" : "'" + (this.terminals_[symbol] || symbol) + "'");
 	                        }
 	                        this.parseError(errStr, { text: this.lexer.match, token: this.terminals_[symbol] || symbol, line: this.lexer.yylineno, loc: yyloc, expected: expected });
 	                    }
@@ -2516,7 +2516,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    i = body.length;
 	  }
 
-	  // Nodes that end with newlines are considered whitespace (but are special
+	  // Nodes that endDate with newlines are considered whitespace (but are special
 	  // cased for strip operations)
 	  var prev = body[i - 1],
 	      sibling = body[i - 2];
