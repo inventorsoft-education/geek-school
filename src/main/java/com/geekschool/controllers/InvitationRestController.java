@@ -24,7 +24,8 @@ public class InvitationRestController {
         invitationService.sendInvitation(invitationValidateDto.getFormType(),invitationValidateDto.getEmail());
     }
 
-    @GetMapping(value = "/invitation/user/token")
+    //@GetMapping(value = "/invitation/user/token")
+    @PostMapping(value = "/invitation/user/token")
     public Long getInformationByToken(@RequestParam String token){
         InvitedToken invitedToken = invitedTokenRepository.findByToken(token);
         if(forgotPasswordService.checkToken(invitedToken)){
