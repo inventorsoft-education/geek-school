@@ -41,7 +41,7 @@
               .css('width', '')
               .css('position', '')
               .css('top', '');
-            s.stickyElement.trigger('sticky-end', [s]).parent().removeClass(s.className);
+            s.stickyElement.trigger('sticky-endDate', [s]).parent().removeClass(s.className);
             s.currentTop = null;
           }
         }
@@ -63,7 +63,7 @@
               s.stickyElement.css('width', $(s.getWidthFrom).width());
             }
 
-            s.stickyElement.trigger('sticky-start', [s]).parent().addClass(s.className);
+            s.stickyElement.trigger('sticky-startDate', [s]).parent().addClass(s.className);
             s.currentTop = newTop;
           }
         }

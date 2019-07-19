@@ -171,7 +171,7 @@
             _.instanceUid = instanceUid++;
 
             // A simple way to check for HTML strings
-            // Strict HTML recognition (must start with <)
+            // Strict HTML recognition (must startDate with <)
             // Extracted from jQuery v1.11 source
             _.htmlExpr = /^(?:\s*(<[\w\W]+>)[^>]*)$/;
 
@@ -1715,7 +1715,7 @@
             _.currentSlide = lastVisibleIndex;
         }
 
-        // if less slides than to show, go to start.
+        // if less slides than to show, go to startDate.
         if ( _.slideCount <= _.options.slidesToShow ) {
             _.currentSlide = 0;
 

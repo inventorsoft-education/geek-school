@@ -15,15 +15,16 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "course_lection")
 @NoArgsConstructor
+@AllArgsConstructor
 public class CourseLection implements Serializable {
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Course course;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Lection lection;
 
@@ -32,11 +33,4 @@ public class CourseLection implements Serializable {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime endDate;
-
-    public CourseLection(Course course, Lection lection, LocalDateTime creationDate, LocalDateTime endDate) {
-        this.course = course;
-        this.lection = lection;
-        this.creationDate = creationDate;
-        this.endDate = endDate;
-    }
 }

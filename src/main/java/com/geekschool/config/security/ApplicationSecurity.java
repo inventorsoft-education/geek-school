@@ -39,7 +39,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                         "/forgotPassword","/forgot-password-send", "/user/password/{token}", "/user/{token}", "/users/password",
                         "/users/user").permitAll()
                 .antMatchers(ADMIN_ENDPOINT, "/api/lection/**", "/lection/**", "/api/groups/admin/**",
-                        "/groups", "/api/users/admin/**", "/users").hasAuthority(Role.ADMIN.getAuthority())
+                        "/groups", "/api/users/admin/**", "/users", "/api/courses/**", "/api/courses-template/**").hasAuthority(Role.ADMIN.getAuthority())
                 .antMatchers(TEACHER_ENDPOINT).hasAuthority(Role.TEACHER.getAuthority())
                 .anyRequest().authenticated()
                 .and()

@@ -1,13 +1,15 @@
-package com.geekschool.dto;
+package com.geekschool.dto.lections;
 
+import com.geekschool.dto.UserDto;
 import com.geekschool.entity.CourseLection;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
 public class LectionDto {

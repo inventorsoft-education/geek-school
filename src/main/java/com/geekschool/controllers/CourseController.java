@@ -1,15 +1,16 @@
 package com.geekschool.controllers;
 
-import com.geekschool.dto.CourseDto;
+import com.geekschool.dto.courses.CourseDto;
+import com.geekschool.dto.courses.CourseLectionsDto;
 import com.geekschool.entity.Course;
 import com.geekschool.mapper.CourseMapper;
 import com.geekschool.service.CourseService;
 import lombok.AllArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,12 +30,10 @@ public class CourseController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public CourseDto createCourseOnTheTemplate(@RequestParam("id_course_template") Long id,
-                                               @RequestParam("creation_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime startDate,
-                                               @RequestParam("end_date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime endDate) {
-        Course course = courseService.createCourseOnTheTemplate(id, startDate, endDate);
+    public CourseDto createCourseOnTheTemplate(@Valid @RequestBody CourseLectionsDto courseLectionsDto) {
+        Course course = courseService.createCourseOnTheTemplate(courseLectionsDto);
         return courseMapper.convertToSubjectDto(course);
     }
 

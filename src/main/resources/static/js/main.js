@@ -321,7 +321,7 @@ $(document).ready(function(){
                 // Basic options for a simple Google Map
                 // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
                 var mapOptions = {
-                    // How zoomed in you want the map to start at (always required)
+                    // How zoomed in you want the map to startDate at (always required)
                     zoom: 11,
 
                     // The latitude and longitude to center the map (always required)

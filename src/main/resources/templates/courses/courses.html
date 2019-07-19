@@ -4,6 +4,7 @@
 <head th:include="layouts/layout :: headerFragment">
     <title id="pageTitle">Courses</title>
 </head>
+
 <body>
 <div th:insert="layouts/layout :: header"></div>
 
@@ -99,47 +100,6 @@
     </div>
 </script>
 
-<div class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Enter date</h4>
-            </div>
-            <div class="container border-top-generic">
-                <div class="modal-body">
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="mt-10">
-                                <h5>Begin</h5>
-                                <input id="start_time" type="datetime-local"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <div class="mt-10">
-                                <h5>End</h5>
-                                <input id="end_time" type="datetime-local"/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <input type="hidden" name="isEmpty" value="">
-                        <button type="input" name="submit" id="btn_ok" value="newAccount"
-                                class="genric-btn primary">
-                            <i class="fa fa-check"></i> Create
-                        </button>
-                        <button type="button" class="genric-btn primary" id="btn_cancel" data-dismiss="modal">
-                            <i class="fa fa-times-circle"></i> Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <script type="text/javascript" src="js/app/courses.js"></script>
 
 <div th:insert="layouts/layout :: footer">...</div>

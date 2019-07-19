@@ -1,5 +1,6 @@
-package com.geekschool.dto;
+package com.geekschool.dto.courses;
 
+import com.geekschool.dto.lections.LectionDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
