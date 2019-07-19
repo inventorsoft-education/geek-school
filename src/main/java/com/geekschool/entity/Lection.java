@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -20,11 +20,13 @@ public class Lection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
 
     private String description;
 
     @JsonIgnore
+    @ToString.Exclude
     @OneToMany(mappedBy = "lection", cascade = CascadeType.ALL)
     private List<CourseLection> courseLections;
 

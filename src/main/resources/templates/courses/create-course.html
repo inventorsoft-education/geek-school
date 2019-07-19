@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:include="layouts/layout :: headerFragment">
+
+    <title id="pageTitle">Create-course</title>
+</head>
+
+<body>
+<div th:insert="layouts/layout :: header"></div>
+
+<section id="team" class="pb-5">
+    <div class="container">
+        <h5 class="section-title h1">Lections this course</h5>
+        <div class="row" id="lection_list">
+        </div>
+
+        <button type="button"  class="button-group-area mt-10" id="add_course_btn">
+            Create course
+        </button>
+
+    </div>
+</section>
+
+<script id="entry" type="text/x-handlebars-template">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="image-flip" id="eventer" ontouchstart="this.classList.toggle('hover');">
+            <div class="mainflip">
+                <div class="frontside">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">{{name}}</h4>
+
+                            <h5 class="card-title">Begin</h5>
+                            <input class="card-title" id="start_time{{id}}" type="datetime-local"/>
+
+
+                            <h5 class="card-title">End</h5>
+                            <input id="end_time{{id}}" type="datetime-local"/>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" src="../js/app/create-course.js"></script>
+
+
+<div th:insert="layouts/layout :: footer">...</div>
+
+</body>
+</html>
+

@@ -1,4 +1,4 @@
-package com.geekschool.dto;
+package com.geekschool.dto.courses;
 
 import com.geekschool.entity.CourseLection;
 import com.geekschool.entity.Status;

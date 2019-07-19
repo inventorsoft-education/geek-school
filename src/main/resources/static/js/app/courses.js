@@ -77,7 +77,7 @@ $(document).ready(function () {
     }
 
     loadCourses();
-    loadActiveCourses()
+    loadActiveCourses();
 
     $('#courses_list').on('click', '#eventer', function () {
         $(this).toggleClass('image-fliper');
@@ -85,18 +85,9 @@ $(document).ready(function () {
 
     $('#courses_list').on('click', '#btn_create_course', function () {
         var id_course_template = $(this).attr("rel");
-
-        $('.modal').modal('show');
-
-        $('#btn_ok').on('click', function(e) {
-            var start_time_stamp = $('#start_time').val();
-            var end_time_stamp = $('#end_time').val();
-            createCourseOnTheTemplate(id_course_template, start_time_stamp, end_time_stamp);
-            $('.modal').modal('hide');
-        });
+        window.location = "http://localhost:8080/courses/" + id_course_template;
     });
 
-    //active
     $('#active_courses_list').on('click', '#eventer_active', function () {
         $(this).toggleClass('image-fliper');
     });
